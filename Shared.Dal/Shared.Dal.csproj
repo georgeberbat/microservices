@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>disable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Dex.Ef" Version="1.0.25" />
+      <PackageReference Include="Dex.Extensions" Version="1.0.11" />
+      <PackageReference Include="Microsoft.AspNetCore.DataProtection.EntityFrameworkCore" Version="6.0.10" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.10" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="6.0.10" />
+      <PackageReference Include="Npgsql" Version="6.0.7" />
+      <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="6.0.7" />
+    </ItemGroup>
+
+</Project>

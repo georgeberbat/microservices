@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>disable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <RootNamespace>Infrastructure.Repositories</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Profile.Dal\Profile.Dal.csproj" />
+      <ProjectReference Include="..\Profile.Interfaces\Profile.Interfaces.csproj" />
+    </ItemGroup>
+
+</Project>

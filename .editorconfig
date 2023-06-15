@@ -1,0 +1,42 @@
+[*.cs]
+# CS1591: ќтсутствует комментарий XML дл¤ открытого видимого типа или члена
+dotnet_diagnostic.CS1591.severity = none
+
+# CA2007: Попробуйте вызвать ConfigureAwait для ожидаемой задачи
+dotnet_diagnostic.CA2007.severity = none
+
+# CA1812: Avoid uninstantiated internal classes
+dotnet_diagnostic.CA1812.severity = none
+
+# CA1024: Используйте свойства, когда это уместно
+dotnet_diagnostic.CA1024.severity = none
+
+# CA1031: Не перехватывать исключения общих типов
+dotnet_diagnostic.CA1031.severity = silent
+
+# CA1308: Нормализуйте строки до прописных букв
+dotnet_diagnostic.CA1308.severity = silent
+
+#CA1716: Identifiers should not match keywords
+dotnet_diagnostic.CA1716.severity = silent
+
+# CA2227: Свойства коллекций должны быть доступны только для чтения
+dotnet_diagnostic.CA2227.severity = none
+
+# CA1819: Свойства не должны возвращать массивы
+dotnet_diagnostic.CA1819.severity = none
+
+# [CA1032] Стандартный набор конструкторов в exception
+dotnet_diagnostic.CA1032.severity = none
+
+# [CS0618] Deprecated, hosted service is automatically added to the container
+dotnet_diagnostic.CS0618.severity = none 
+
+# [CA1056]  Измените тип свойства со "string" на "System.Uri".
+dotnet_diagnostic.CA1056.severity = none 
+ 
+# [CA1840] Для повышения производительности используйте делегаты LoggerMessage вместо вызова "LoggerExtensions.LogDebug(ILogger, string, params object[])"
+dotnet_diagnostic.CA1848.severity = none
+
+# [CA2253] Именованные заполнители в шаблоне сообщения о ведении журнала не должны состоять только из цифр
+dotnet_diagnostic.CA2253.severity = none

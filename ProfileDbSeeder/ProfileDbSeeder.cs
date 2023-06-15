@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using FakeData.Profile;
 using Microsoft.Extensions.Internal;
 using Profile.Dal;
-using Profile.Dal.Model;
+using ProfileDomain;
 using Shared.BaseDbSeeder.Seeder;
 using Shared.Password;
 
@@ -27,7 +27,7 @@ namespace ProfileDbSeeder
             if (!_dbContext.Users.Any())
             {
                 var userId = UserConstantId.FakeIdArray[0];
-                await _dbContext.Users.AddAsync(new UserDb
+                await _dbContext.Users.AddAsync(new User
                 {
                     Id = userId,
                     Phone = "37377943964",
@@ -37,7 +37,7 @@ namespace ProfileDbSeeder
                 }).ConfigureAwait(false);
 
                 userId = UserConstantId.FakeIdArray[1];
-                await _dbContext.Users.AddAsync(new UserDb
+                await _dbContext.Users.AddAsync(new User
                 {
                     Id = userId,
                     Email = "invariantcalibration@gmail.com",

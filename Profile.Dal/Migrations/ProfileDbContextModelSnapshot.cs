@@ -23,7 +23,7 @@ namespace Profile.Dal.Migrations
             NpgsqlModelBuilderExtensions.HasPostgresExtension(modelBuilder, "uuid-ossp");
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("Profile.Dal.Model.UserDb", b =>
+            modelBuilder.Entity("Profile.Dal.Model.User", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()

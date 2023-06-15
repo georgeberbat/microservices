@@ -15,6 +15,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\Profile.Models\Profile.Models.csproj" />
       <ProjectReference Include="..\Shared.Dal\Shared.Dal.csproj" />
     </ItemGroup>
 

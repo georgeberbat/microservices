@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Profile.Dal.Model;
+using ProfileDomain;
 
 namespace Profile.ServiceInterfaces.Repositories
 {
     public interface IUserRepository
     {
-        Task<UserDb?> GetUser(Guid id);
+        Task<User?> GetUser(Guid id);
     }
 }

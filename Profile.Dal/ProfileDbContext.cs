@@ -1,9 +1,7 @@
 using System;
 using System.Runtime.CompilerServices;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Internal;
-using Npgsql;
-using Profile.Dal.Model;
+using ProfileDomain;
 using Shared.Dal;
 
 namespace Profile.Dal
@@ -11,7 +9,7 @@ namespace Profile.Dal
 
     public class ProfileDbContext : BaseDbContext<ProfileDbContext>
     {
-        public DbSet<UserDb> Users => Set<UserDb>();
+        public DbSet<User> Users => Set<User>();
 
 #pragma warning disable CA2255
         [ModuleInitializer]

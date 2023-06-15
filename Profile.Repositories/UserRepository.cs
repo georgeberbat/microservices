@@ -2,8 +2,8 @@
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Profile.Dal;
-using Profile.Dal.Model;
 using Profile.ServiceInterfaces.Repositories;
+using ProfileDomain;
 using Shared.Dal.Repository;
 
 namespace Infrastructure.Repositories
@@ -18,7 +18,7 @@ namespace Infrastructure.Repositories
             }
         }
         
-        public async Task<UserDb?> GetUser(Guid id)
+        public async Task<User?> GetUser(Guid id)
         {
             return await DbContext.Users.FirstOrDefaultAsync(x => x.Id == id);
         }

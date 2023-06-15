@@ -1,8 +1,9 @@
 ﻿using System;
+using Dex.Ef.Contracts.Entities;
 
 namespace ProfileDomain
 {
-    public sealed class User
+    public sealed class User : IDeletable, ICreatedUtc, IUpdatedUtc
     {
         public Guid Id { get; set; }
         public DateTime CreatedUtc { get; set; }

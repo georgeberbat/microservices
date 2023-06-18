@@ -1,18 +1,24 @@
 ﻿using System.Threading.Tasks;
 using Shared.BaseDbSeeder.Seeder;
 using Shared.Dal;
+using Shared.Dal.Seeder;
 
 namespace ProfileDbSeeder
 {
     public class SecurityTokenDbSeeder : BaseEFSeeder<SecurityTokenDbContext>, IDbSeeder
     {
-        public SecurityTokenDbSeeder(SecurityTokenDbContext dbContext) : base(dbContext)
+        public SecurityTokenDbSeeder()
         {
         }
-
-        protected override Task EnsureSeedData()
+        
+        protected override Task EnsureSeedData(SecurityTokenDbContext dbContext)
         {
-            return Task.CompletedTask;
+            throw new System.NotImplementedException();
+        }
+
+        public Task RunAsync(bool ensureDeleted)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

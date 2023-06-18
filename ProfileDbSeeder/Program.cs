@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Shared.BaseDbSeeder;
+using Shared.Dal;
 
 namespace ProfileDbSeeder
 {

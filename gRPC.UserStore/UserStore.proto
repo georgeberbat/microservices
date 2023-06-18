@@ -1,0 +1,71 @@
+﻿syntax = "proto3";
+import "google/protobuf/timestamp.proto";
+
+service UserStore {
+  rpc ValidateCredentials (Credential) returns (AuthResult);
+  rpc FindBySubjectId(Subject) returns(User);
+  rpc FindByUsername(UserFilter) returns(User);
+  rpc FindByExternalProvider(UserFilterByProvider) returns(User);
+  rpc DeleteById(UserId) returns(ResultStatus);
+  rpc SetUserVirtualCardReference(VirtualCardInfo) returns(ResultStatus);
+}
+
+message Credential {
+  string username = 1;
+  string password = 2;
+  string clientId = 3;
+}
+
+message AuthResult {
+  bool success = 1;
+  string message = 2;
+  string sub = 3;
+  uint32 noUntil = 4;
+  AuthErrorCode errorCode = 5;
+}
+
+enum AuthErrorCode {
+  None = 0; NotFound = 1; BruteForce = 2;
+}
+
+message User{
+  string sub = 1;
+  string name = 2;
+  bool isActive = 3;
+  repeated SimpleClaim claims = 4;
+}
+
+message Subject{
+  string sub = 1;
+  repeated SimpleClaim claims = 2;
+}
+
+message UserFilter{
+  string username = 1;
+}
+
+message UserFilterByProvider{
+  string userId = 1;
+  string provider = 2;
+}
+
+message SimpleClaim{
+  string type = 1;
+  string value = 2;
+}
+
+message UserId{
+string id = 1;
+
+}
+
+message ResultStatus{
+string status = 1;
+}
+
+message VirtualCardInfo{
+	string userId = 1;
+	string reference = 2;
+  google.protobuf.Timestamp releaseDate = 3;
+  bool releaseDateHasValue = 4;
+}

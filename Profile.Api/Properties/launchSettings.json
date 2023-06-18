@@ -1,7 +1,7 @@
 ﻿{
   "$schema": "http://json.schemastore.org/launchsettings.json",
   "profiles": {
-    "GorodPay.Profile": {
+    "Profile": {
       "commandName": "Project",
       "dotnetRunMessages": "true",
       "launchBrowser": false,
@@ -13,7 +13,7 @@
         "ASPNETCORE_Kestrel__Certificates__Default__Password": ""
       }
     },
-    "GorodPay.Profile Seed": {
+    "Profile Seed": {
       "commandName": "Project",
       "commandLineArgs": "--seed",
       "dotnetRunMessages": "true",

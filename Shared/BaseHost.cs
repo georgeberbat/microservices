@@ -107,6 +107,11 @@ namespace Shared
                 }
             }
         }
+        
+        protected virtual Task SeedDatabase(IHost host, bool ensureDeleted)
+        {
+            return Task.CompletedTask;
+        }
 
         protected void InitHttps(ListenOptions options, WebHostBuilderContext hostBuilderContext)
         {

@@ -2,32 +2,29 @@
 using System.Linq;
 using System.Threading.Tasks;
 using FakeData.Profile;
-using Microsoft.Extensions.Internal;
 using Profile.Dal;
 using ProfileDomain;
 using Shared.BaseDbSeeder.Seeder;
+using Shared.Dal.Seeder;
 using Shared.Password;
 
 namespace ProfileDbSeeder
 {
     public class ProfileDbSeeder : BaseEFSeeder<ProfileDbContext>, IDbSeeder
     {
-        private readonly ISystemClock _systemClock;
         private readonly IPasswordGenerator _pwdGen;
 
-        public ProfileDbSeeder(ISystemClock systemClock, IPasswordGenerator passwordGenerator, ProfileDbContext dbContext)
-            : base(dbContext)
+        public ProfileDbSeeder(IPasswordGenerator passwordGenerator)
         {
-            _systemClock = systemClock ?? throw new ArgumentNullException(nameof(systemClock));
             _pwdGen = passwordGenerator ?? throw new ArgumentNullException(nameof(passwordGenerator));
         }
 
-        protected override async Task EnsureSeedData()
+        protected override async Task EnsureSeedData(ProfileDbContext dbContext)
         {
-            if (!_dbContext.Users.Any())
+            if (!dbContext.Users.Any())
             {
                 var userId = UserConstantId.FakeIdArray[0];
-                await _dbContext.Users.AddAsync(new User
+                await dbContext.Users.AddAsync(new User
                 {
                     Id = userId,
                     Phone = "37377943964",
@@ -37,7 +34,7 @@ namespace ProfileDbSeeder
                 }).ConfigureAwait(false);
 
                 userId = UserConstantId.FakeIdArray[1];
-                await _dbContext.Users.AddAsync(new User
+                await dbContext.Users.AddAsync(new User
                 {
                     Id = userId,
                     Email = "invariantcalibration@gmail.com",
@@ -47,8 +44,13 @@ namespace ProfileDbSeeder
                     FirstName = "Ivan",
                 }).ConfigureAwait(false);
 
-                await _dbContext.SaveChangesAsync();
+                await dbContext.SaveChangesAsync();
             }
+        }
+
+        public Task RunAsync(bool ensureDeleted)
+        {
+            throw new NotImplementedException();
         }
     }
 }

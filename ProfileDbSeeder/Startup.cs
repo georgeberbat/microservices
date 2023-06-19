@@ -1,11 +1,10 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Profile.Dal;
 using Profile.Dal.Migrations;
 using Profile.Dal.Migrations.SecurityTokenDb;
-using Shared.BaseDbSeeder;
+using Shared;
 using Shared.Dal;
 using Shared.Password;
 
@@ -13,7 +12,7 @@ namespace ProfileDbSeeder
 {
     public class Startup : BaseStartup
     {
-        public Startup(HostBuilderContext builderContext) : base(builderContext)
+        public Startup(IWebHostEnvironment environment, IConfiguration configuration) : base(environment, configuration)
         {
         }
 
@@ -25,7 +24,7 @@ namespace ProfileDbSeeder
             services.AddDbContext<ProfileDbContext, IProfileMigrationMarker>(Configuration.GetConnectionString("DefaultConnection"));
             services.AddDbContext<SecurityTokenDbContext, InitSecurityTokenDb>(Configuration.GetConnectionString("SecurityProviderConnection"));
 
-            services.AddScoped<ProfileDbSeeder>();
+            services.AddScoped<Profile.Dal.ProfileDbSeeder>();
             services.AddScoped<SecurityTokenDbSeeder>();
         }
     }

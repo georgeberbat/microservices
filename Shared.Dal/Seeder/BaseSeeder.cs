@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Internal;
 using Serilog;
@@ -31,7 +32,10 @@ namespace Shared.Dal.Seeder
             Log.Debug("Seeding database [{Database}]", typeof(TDbContext).FullName);
 
             ServiceProvider = Services.BuildServiceProvider();
-            
+
+            // check mapping config
+            var provider = ServiceProvider.GetService<IConfigurationProvider>();
+            provider?.AssertConfigurationIsValid();
 
             var repeatCount = 10;
             Exception? lastException = null;

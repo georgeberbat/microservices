@@ -9,7 +9,6 @@ using IdentityServer4.EntityFramework.Mappers;
 using IdentityServer4.EntityFramework.Storage;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
-using Shared.BaseDbSeeder.Seeder;
 using Shared.Dal.Seeder;
 using Secret = IdentityServer4.Models.Secret;
 

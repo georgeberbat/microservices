@@ -10,7 +10,6 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Profile.Dal\Profile.Dal.csproj" />
-      <ProjectReference Include="..\Profile.Repositories\Profile.Repositories.csproj" />
       <ProjectReference Include="..\Profile.Services\Profile.Services.csproj" />
       <ProjectReference Include="..\Shared\Shared.csproj" />
     </ItemGroup>

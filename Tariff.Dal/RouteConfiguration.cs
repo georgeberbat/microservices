@@ -12,6 +12,7 @@ public class RouteConfiguration : IEntityTypeConfiguration<Route>
         builder.HasKey(r => r.Id);
 
         builder.Property(r => r.Id).HasColumnName("id");
+        builder.Property(r => r.UserId).HasColumnName("user_id");
         builder.Property(r => r.Name).HasColumnName("name").IsRequired();
         builder.Property(r => r.Description).HasColumnName("description");
         builder.Property(r => r.CreatedUtc).HasColumnName("created_utc").IsRequired();

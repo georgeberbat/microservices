@@ -23,7 +23,6 @@ namespace Location.Api
         {
             base.ConfigureServices(services);
 
-            var connectionString = Configuration.GetConnectionString("DefaultConnection");
             // settings
             services.AddOptionsWithDataAnnotationsValidation<TokenOptions>(Configuration.GetSection(nameof(TokenOptions)));
             services.AddMvc();

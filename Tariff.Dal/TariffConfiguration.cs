@@ -11,6 +11,7 @@ public class TariffConfiguration : IEntityTypeConfiguration<Models.Tariff>
         builder.HasKey(t => t.Id);
 
         builder.Property(t => t.Id).HasColumnName("id");
+        builder.Property(r => r.UserId).HasColumnName("user_id");
         builder.Property(t => t.Name).HasColumnName("name").IsRequired();
         builder.Property(t => t.CreatedUtc).HasColumnName("created_utc").IsRequired();
         builder.Property(t => t.UpdatedUtc).HasColumnName("updated_utc").IsRequired();

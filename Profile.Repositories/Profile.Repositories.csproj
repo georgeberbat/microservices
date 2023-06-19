@@ -9,7 +9,6 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Profile.Dal\Profile.Dal.csproj" />
-      <ProjectReference Include="..\Profile.Interfaces\Profile.Interfaces.csproj" />
     </ItemGroup>
 
 </Project>

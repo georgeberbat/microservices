@@ -3,7 +3,7 @@ using Dex.Ef.Contracts.Entities;
 
 namespace ProfileDomain
 {
-    public sealed class User : IDeletable, ICreatedUtc, IUpdatedUtc
+    public sealed class User : IDeletable, ICreatedUtc, IUpdatedUtc, IEntity<Guid>
     {
         public Guid Id { get; set; }
         public DateTime CreatedUtc { get; set; }

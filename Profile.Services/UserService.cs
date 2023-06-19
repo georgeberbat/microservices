@@ -1,28 +1,51 @@
 ﻿using System;
+using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
-using Profile.ServiceInterfaces.Repositories;
-using Profile.ServiceInterfaces.Services;
+using Dex.Cap.Outbox.Interfaces;
+using Profile.Dal.Repositories;
+using Profile.Dal.Specifications;
 using ProfileDomain;
+using Shared.Dal;
 
 namespace Profile.Services
 {
     public class UserService : IUserService
     {
-        private readonly IUserRepository _userRepository;
+        private readonly IWriteUserRepository _writeUserRepository;
         private readonly IMapper _mapper;
+        private readonly IUnityOfWork _dbContext;
+        private readonly IOutboxService<IUnityOfWork> _outboxService;
 
-        public UserService(IUserRepository userRepository, IMapper mapper)
+        public UserService(IWriteUserRepository writeUserRepository, IMapper mapper, IUnityOfWork dbContext, IOutboxService<IUnityOfWork> outboxService)
         {
-            _userRepository = userRepository;
+            _writeUserRepository = writeUserRepository;
             _mapper = mapper;
+            _dbContext = dbContext;
+            _outboxService = outboxService;
         }
 
-        public async Task<User> GetUser(Guid id)
+        public async Task<User> GetUser(Guid id, CancellationToken cancellationToken)
         {
-            var userDb = await _userRepository.GetUser(id);
-            var user = _mapper.Map<User>(userDb);
-            return user;
+            return await _writeUserRepository.Read.GetByIdAsync(id, cancellationToken);
+        }
+
+        public async Task RegisterUser(IRegisterUserCommand request, CancellationToken cancellationToken)
+        {
+            if (request == null) throw new ArgumentNullException(nameof(request));
+            
+            var userId = Guid.NewGuid();
+            var correlationId = Guid.NewGuid();
+
+            await _outboxService.ExecuteOperationAsync(correlationId,
+                new {DbContext = _dbContext, Mapper = _mapper, Repository = _writeUserRepository},
+                async (token, ctx) =>
+                {
+                    var userDb = (await _writeUserRepository.Read
+                            .FilterAsync(new ActiveUserByPhoneSpecification(request.PhoneNumber), token))
+                        .FirstOrDefault();
+                }, cancellationToken);
         }
     }
 }

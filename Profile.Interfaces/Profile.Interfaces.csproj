@@ -12,4 +12,8 @@
       <ProjectReference Include="..\Profile.Models\Profile.Models.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Services" />
+    </ItemGroup>
+
 </Project>

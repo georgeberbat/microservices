@@ -1,6 +1,5 @@
 using System;
 using IdentityModel.AspNetCore.AccessTokenValidation;
-using Infrastructure.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -8,15 +7,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Profile.Dal;
-using Profile.Dal.Migrations;
-using Profile.ServiceInterfaces.Repositories;
-using Profile.ServiceInterfaces.Services;
-using Profile.Services;
-using Shared;
-using Shared.Dal;
 using Shared.Extensions;
 using Shared.Options;
+using BaseStartup = Shared.BaseStartup;
 
 namespace Profile
 {
@@ -32,9 +25,8 @@ namespace Profile
             base.ConfigureServices(services);
 
             var connectionString = Configuration.GetConnectionString("DefaultConnection");
-            services.AddDbContext<ProfileDbContext, IProfileMigrationMarker>(connectionString);
-            services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<IUserService, UserService>();
+            
+            // todo: register internal services
             // settings
             services.AddOptionsWithDataAnnotationsValidation<TokenOptions>(Configuration.GetSection(nameof(TokenOptions)));
             services.AddMvc();

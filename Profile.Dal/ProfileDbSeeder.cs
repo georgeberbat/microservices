@@ -2,15 +2,13 @@
 using System.Linq;
 using System.Threading.Tasks;
 using FakeData.Profile;
-using Profile.Dal;
 using ProfileDomain;
-using Shared.BaseDbSeeder.Seeder;
 using Shared.Dal.Seeder;
 using Shared.Password;
 
-namespace ProfileDbSeeder
+namespace Profile.Dal
 {
-    public class ProfileDbSeeder : BaseEFSeeder<ProfileDbContext>, IDbSeeder
+    public class ProfileDbSeeder : BaseEFSeeder<ProfileDbContext>
     {
         private readonly IPasswordGenerator _pwdGen;
 
@@ -46,11 +44,6 @@ namespace ProfileDbSeeder
 
                 await dbContext.SaveChangesAsync();
             }
-        }
-
-        public Task RunAsync(bool ensureDeleted)
-        {
-            throw new NotImplementedException();
         }
     }
 }

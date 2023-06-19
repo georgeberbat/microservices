@@ -3,7 +3,7 @@ using System.Data;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
-using Shared.BaseDbSeeder.Seeder;
+using Shared.Dal.Extensions;
 
 namespace Shared.Dal.Seeder
 {
@@ -17,9 +17,9 @@ namespace Shared.Dal.Seeder
 
         protected void AddDbContext(string connectionString)
         {
-            Services.AddDbContext<TDbContext, TDbContext>(connectionString);
+            Services.AddDbContext<TDbContext>(connectionString);
         }
-        
+
         protected override bool IsTransientException(Exception exception)
         {
             return exception is NpgsqlException {IsTransient: true};
@@ -50,7 +50,7 @@ namespace Shared.Dal.Seeder
             {
                 if (npg.State != ConnectionState.Open)
                 {
-                    npg.Open(); // Диспозить не должны.
+                    await npg.OpenAsync(); // Диспозить не должны.
                 }
 
                 npg.ReloadTypes();

@@ -18,8 +18,8 @@ namespace Profile.Dal
         {
         }
         
-        public ProfileDbContext(DbContextOptions<ProfileDbContext> options)
-            : base(options)
+        public ProfileDbContext(DbContextOptions<ProfileDbContext> options, ModelStore<ProfileDbContext> modelStore)
+            : base(options, modelStore)
         {
         }
 

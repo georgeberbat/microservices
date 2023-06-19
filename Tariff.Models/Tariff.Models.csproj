@@ -7,7 +7,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Location.Models\Location.Models.csproj" />
+      <PackageReference Include="Dex.Ef" Version="1.0.25" />
     </ItemGroup>
 
 </Project>

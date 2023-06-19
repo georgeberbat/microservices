@@ -11,7 +11,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Route.Models\Route.Models.csproj" />
+        <ProjectReference Include="..\Tariff.Models\Tariff.Models.csproj" />
         <ProjectReference Include="..\Shared.Dal\Shared.Dal.csproj" />
     </ItemGroup>
 

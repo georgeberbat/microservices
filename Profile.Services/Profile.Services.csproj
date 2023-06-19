@@ -17,4 +17,10 @@
       <ProjectReference Include="..\Shared.Dal\Shared.Dal.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Compile Update="UserService.cs">
+        <DependentUpon>IUserService.cs</DependentUpon>
+      </Compile>
+    </ItemGroup>
+
 </Project>

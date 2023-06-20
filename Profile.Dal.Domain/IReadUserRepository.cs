@@ -1,8 +1,7 @@
-using System;
 using ProfileDomain;
 using Shared.Dal;
 
-namespace Profile.Dal.Repositories
+namespace Profile.Dal.Domain
 {
     public interface IReadUserRepository : IReadRepository<User, Guid>
     {

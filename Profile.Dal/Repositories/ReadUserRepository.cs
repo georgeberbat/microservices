@@ -1,4 +1,5 @@
 ﻿using System;
+using Profile.Dal.Domain;
 using ProfileDomain;
 using Shared.Dal;
 

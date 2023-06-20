@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Extensions.Internal;
+using Profile.Dal.Domain;
 using ProfileDomain;
 using Shared.Dal;
 

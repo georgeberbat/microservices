@@ -4,6 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using Dex.Cap.Outbox.Interfaces;
+using Profile.Dal.Domain;
 using Profile.Dal.Repositories;
 using Profile.Dal.Specifications;
 using ProfileDomain;
@@ -26,7 +27,7 @@ namespace Profile.Services
             _outboxService = outboxService;
         }
 
-        public async Task<User> GetUser(Guid id, CancellationToken cancellationToken)
+        public async Task<ProfileDomain.User> GetUser(Guid id, CancellationToken cancellationToken)
         {
             return await _writeUserRepository.Read.GetByIdAsync(id, cancellationToken);
         }

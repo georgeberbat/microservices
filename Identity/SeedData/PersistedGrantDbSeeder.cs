@@ -19,7 +19,7 @@ namespace Identity.SeedData
 
         protected override Task EnsureSeedData(PersistedGrantDbContext dbContext)
         {
-            throw new System.NotImplementedException();
+            return Task.FromResult(true);
         }
     }
 }

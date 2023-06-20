@@ -17,9 +17,10 @@
 
     <ItemGroup>
         <PackageReference Include="Dex.Cap.Outbox" Version="1.4.30" />
-        <PackageReference Include="Dex.MassTransit.Rabbit" Version="2.1.29" />
+        <PackageReference Include="Grpc.AspNetCore.Server" Version="2.54.0" />
         <PackageReference Include="IdentityServer4.EntityFramework" Version="4.1.2" />
         <PackageReference Include="IdentityServer4.EntityFramework.Storage" Version="4.1.2" />
+        <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
         <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     </ItemGroup>
 
@@ -44,9 +45,6 @@
     <ItemGroup>
         <Content Update="appsettings.Development.local.json">
             <DependentUpon>appsettings.json</DependentUpon>
-        </Content>
-        <Content Update="prod-sign-token-key.json">
-            <DependentUpon>sign-token-key.json</DependentUpon>
         </Content>
     </ItemGroup>
 

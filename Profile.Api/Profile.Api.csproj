@@ -19,6 +19,8 @@
         <PrivateAssets>all</PrivateAssets>
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       </PackageReference>
+        <PackageReference Include="Grpc.AspNetCore.Server" Version="2.54.0">
+        </PackageReference>
     </ItemGroup>
 
     <ItemGroup>

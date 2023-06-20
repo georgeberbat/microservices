@@ -12,9 +12,10 @@ namespace Profile.Dal
     {
         private readonly IPasswordGenerator _pwdGen;
 
-        public ProfileDbSeeder(IPasswordGenerator passwordGenerator)
+        public ProfileDbSeeder(string connectionString, IPasswordGenerator passwordGenerator)
         {
             _pwdGen = passwordGenerator ?? throw new ArgumentNullException(nameof(passwordGenerator));
+            AddDbContext(connectionString);
         }
 
         protected override async Task EnsureSeedData(ProfileDbContext dbContext)
@@ -26,7 +27,7 @@ namespace Profile.Dal
                 {
                     Id = userId,
                     Phone = "37377943964",
-                    Password = _pwdGen.MakeHash(userId.ToString("N"), "132565QWEq"),
+                    Password = _pwdGen.MakeHash(userId.ToString("N"), "mypass123"),
                     LastName = "Berbat",
                     FirstName = "Georgy",
                 }).ConfigureAwait(false);

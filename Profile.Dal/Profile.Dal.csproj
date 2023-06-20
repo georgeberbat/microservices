@@ -16,15 +16,10 @@
 
     <ItemGroup>
       <ProjectReference Include="..\FakeData\FakeData.csproj" />
+      <ProjectReference Include="..\Profile.Dal.Domain\Profile.Dal.Domain.csproj" />
       <ProjectReference Include="..\Profile.Models\Profile.Models.csproj" />
       <ProjectReference Include="..\Shared.Dal\Shared.Dal.csproj" />
       <ProjectReference Include="..\Shared.Password\Shared.Password.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Compile Update="Repositories\ReadUserRepository.cs">
-        <DependentUpon>IReadUserRepository.cs</DependentUpon>
-      </Compile>
     </ItemGroup>
 
 </Project>

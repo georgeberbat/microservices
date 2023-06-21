@@ -1,7 +1,6 @@
-﻿
-
-using System;
+﻿using System;
 using System.Threading.Tasks;
+using Google.Protobuf.WellKnownTypes;
 using Grpc.Core;
 using Profile.Services;
 
@@ -16,8 +15,15 @@ public class ProfileGrpcService : ProfileGrpc.ProfileGrpcBase
         _userService = userService ?? throw new ArgumentNullException(nameof(userService));
     }
 
-    public override async Task<RegisterUserResponse> RegisterUser(RegisterUserRequest request, ServerCallContext context)
+    public override async Task<RegisterUserResponse> RegisterUser(RegisterUserRequest request,
+        ServerCallContext context)
     {
         return await _userService.RegisterUser(request, context.CancellationToken);
+    }
+
+    public override async Task<Empty> DeleteMyself(GuidKey request, ServerCallContext context)
+    {
+        await _userService.DeleteUser(Guid.Parse(request.Id), context.CancellationToken);
+        return new Empty();
     }
 }

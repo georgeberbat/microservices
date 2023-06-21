@@ -9,7 +9,6 @@ using Profile.Dal.Specifications;
 using ProfileDomain;
 using Shared.Dal;
 using Shared.Dal.Exceptions;
-using User = ProfileDomain.User;
 
 namespace Profile.Services
 {
@@ -20,7 +19,8 @@ namespace Profile.Services
         private readonly IUnityOfWork _dbContext;
         private readonly IOutboxService<IUnityOfWork> _outboxService;
 
-        public UserService(IWriteUserRepository writeUserRepository, IMapper mapper, IUnityOfWork dbContext, IOutboxService<IUnityOfWork> outboxService)
+        public UserService(IWriteUserRepository writeUserRepository, IMapper mapper, IUnityOfWork dbContext,
+            IOutboxService<IUnityOfWork> outboxService)
         {
             _writeUserRepository = writeUserRepository;
             _mapper = mapper;
@@ -33,15 +33,16 @@ namespace Profile.Services
             return await _writeUserRepository.Read.GetByIdAsync(id, cancellationToken);
         }
 
-        public async Task<RegisterUserResponse> RegisterUser(IRegisterUserCommand request, CancellationToken cancellationToken)
+        public async Task<RegisterUserResponse> RegisterUser(IRegisterUserCommand request,
+            CancellationToken cancellationToken)
         {
             if (request == null) throw new ArgumentNullException(nameof(request));
-            
+
             var userId = Guid.NewGuid();
             var correlationId = Guid.NewGuid();
 
             await _outboxService.ExecuteOperationAsync(correlationId,
-                new {DbContext = _dbContext, Mapper = _mapper, Repository = _writeUserRepository},
+                new { DbContext = _dbContext, Mapper = _mapper, Repository = _writeUserRepository },
                 async (token, ctx) =>
                 {
                     var userDb = (await ctx.State.Repository.Read
@@ -63,6 +64,12 @@ namespace Profile.Services
                 }, cancellationToken);
 
             return new RegisterUserResponse { UserId = userId.ToString() };
+        }
+
+        public async Task DeleteUser(Guid userId, CancellationToken cancellationToken)
+        {
+            var user = await _writeUserRepository.Read.GetByIdAsync(userId, cancellationToken);
+            await _writeUserRepository.RemoveAsync(user, cancellationToken);
         }
     }
 }

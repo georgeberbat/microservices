@@ -10,5 +10,6 @@ namespace Profile.Services
         Task<ProfileDomain.User> GetUser(Guid id, CancellationToken cancellationToken);
         
         Task<RegisterUserResponse> RegisterUser(IRegisterUserCommand request, CancellationToken cancellationToken);
+        Task DeleteUser(Guid userId, CancellationToken cancellationToken);
     }
 }

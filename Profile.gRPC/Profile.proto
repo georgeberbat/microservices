@@ -1,4 +1,5 @@
 ﻿syntax = "proto3";
+import "google/protobuf/empty.proto";
 
 message RegisterUserRequest {
   string phone = 1;
@@ -9,6 +10,11 @@ message RegisterUserResponse {
   string userId = 1;
 }
 
+message GuidKey {
+  string Id = 1;
+}
+
 service ProfileGrpc {
   rpc RegisterUser(RegisterUserRequest) returns (RegisterUserResponse);
+  rpc DeleteMyself(GuidKey) returns (google.protobuf.Empty);
 }

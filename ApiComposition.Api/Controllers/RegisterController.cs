@@ -1,13 +1,11 @@
 using ApiComposition.Api.GrpcClients;
 using ApiComposition.Api.ServiceModel;
-using ApiComposition.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shared.Controllers;
 
 namespace ApiComposition.Api.Controllers;
 
-[AllowAnonymous]
 public class RegisterController : BaseAnonymousController
 {
     private readonly ProfileClient _profileClient;
@@ -18,9 +16,18 @@ public class RegisterController : BaseAnonymousController
     }
 
     [HttpPost]
-    public async Task<IActionResult> RegisterUser(RegistrationRequest request)
+    [AllowAnonymous]
+    public async Task<IActionResult> RegisterUser(RegistrationRequest request, CancellationToken cancellationToken)
     {
-        var result = await _profileClient.RegisterUser(request);
+        var result = await _profileClient.RegisterUser(request, cancellationToken);
         return Ok(result.UserId);
+    }
+    
+    [HttpDelete]
+    [Authorize]
+    public async Task<IActionResult> DeleteMyself(CancellationToken cancellationToken)
+    {
+        await _profileClient.DeleteMyself(cancellationToken);
+        return Ok();
     }
 }

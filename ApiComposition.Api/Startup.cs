@@ -9,7 +9,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Shared.Extensions;
+using Shared.Interfaces;
 using Shared.Options;
+using Shared.Services;
 using BaseStartup = Shared.BaseStartup;
 
 namespace ApiComposition.Api
@@ -41,6 +43,7 @@ namespace ApiComposition.Api
             
             // todo: register internal services
             services.AddScoped<ProfileClient>();
+            services.AddScoped<IUserIdHttpContextService, UserIdHttpContextService>();
         }
 
         public override void Configure(IApplicationBuilder app, IWebHostEnvironment env)

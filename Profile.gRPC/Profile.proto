@@ -1,0 +1,14 @@
+﻿syntax = "proto3";
+
+message RegisterUserRequest {
+  string phone = 1;
+  string password = 2;
+}
+
+message RegisterUserResponse {
+  string userId = 1;
+}
+
+service ProfileGrpc {
+  rpc RegisterUser(RegisterUserRequest) returns (RegisterUserResponse);
+}

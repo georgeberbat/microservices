@@ -1,4 +1,5 @@
-using IdentityModel.AspNetCore.AccessTokenValidation;
+using ApiComposition.Api.GrpcClients;
+using ApiComposition.Api.Options;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -6,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using Shared.Extensions;
 using Shared.Options;
 using BaseStartup = Shared.BaseStartup;
@@ -23,12 +25,22 @@ namespace ApiComposition.Api
         {
             base.ConfigureServices(services);
 
-            var connectionString = Configuration.GetConnectionString("DefaultConnection");
+            services.Configure<GrpcClientsOptions>(Configuration.GetSection(nameof(GrpcClientsOptions)).Bind);
             
-            // todo: register internal services
             // settings
             services.AddOptionsWithDataAnnotationsValidation<TokenOptions>(Configuration.GetSection(nameof(TokenOptions)));
             services.AddMvc();
+            
+            //grpc
+            services.AddGrpcClient<ProfileGrpc.ProfileGrpcClient>("composition.client.profilegrpc", (p, o) =>
+            {
+                var options = p.GetRequiredService<IOptions<GrpcClientsOptions>>();
+                o.Address = new Uri(options.Value.ProfileServiceUrl);
+                o.Creator = invoker => new ProfileGrpc.ProfileGrpcClient(invoker) { Name = "composition.client.profilegrpc" };
+            });
+            
+            // todo: register internal services
+            services.AddScoped<ProfileClient>();
         }
 
         public override void Configure(IApplicationBuilder app, IWebHostEnvironment env)

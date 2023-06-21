@@ -1,5 +1,4 @@
 using System;
-using IdentityModel.AspNetCore.AccessTokenValidation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -38,6 +37,7 @@ namespace Profile
             services.AddGrpc();
 
             services.AddScoped<IPasswordGenerator, PasswordGenerator>();
+            services.AddScoped<IUserService, UserService>();
 
             var connectionString = Configuration.GetConnectionString("DefaultConnection");
             services.RegisterDal(connectionString);
@@ -71,6 +71,7 @@ namespace Profile
 
             var grpEndpoint = $"*:{Configuration["Grpc:Port"]}";
             endpoints.MapGrpcService<UserStoreService>().RequireHost(grpEndpoint);
+            endpoints.MapGrpcService<ProfileGrpcService>().RequireHost(grpEndpoint);
         }
     }
 }

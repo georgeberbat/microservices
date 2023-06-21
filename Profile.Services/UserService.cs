@@ -5,10 +5,11 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Dex.Cap.Outbox.Interfaces;
 using Profile.Dal.Domain;
-using Profile.Dal.Repositories;
 using Profile.Dal.Specifications;
 using ProfileDomain;
 using Shared.Dal;
+using Shared.Dal.Exceptions;
+using User = ProfileDomain.User;
 
 namespace Profile.Services
 {
@@ -32,7 +33,7 @@ namespace Profile.Services
             return await _writeUserRepository.Read.GetByIdAsync(id, cancellationToken);
         }
 
-        public async Task RegisterUser(IRegisterUserCommand request, CancellationToken cancellationToken)
+        public async Task<RegisterUserResponse> RegisterUser(IRegisterUserCommand request, CancellationToken cancellationToken)
         {
             if (request == null) throw new ArgumentNullException(nameof(request));
             
@@ -43,10 +44,25 @@ namespace Profile.Services
                 new {DbContext = _dbContext, Mapper = _mapper, Repository = _writeUserRepository},
                 async (token, ctx) =>
                 {
-                    var userDb = (await _writeUserRepository.Read
-                            .FilterAsync(new ActiveUserByPhoneSpecification(request.PhoneNumber), token))
+                    var userDb = (await ctx.State.Repository.Read
+                            .FilterAsync(new ActiveUserByPhoneSpecification(request.Phone), token))
                         .FirstOrDefault();
+
+                    if (userDb != null)
+                    {
+                        throw new EntityAlreadyExistsException($"User with number {request.Phone} already exists");
+                    }
+
+                    await ctx.State.Repository.AddAsync(new ProfileDomain.User
+                    {
+                        Phone = request.Phone,
+                        Password = request.Password
+                    }, token);
+
+                    await ctx.State.DbContext.SaveChangesAsync(token);
                 }, cancellationToken);
+
+            return new RegisterUserResponse { UserId = userId.ToString() };
         }
     }
 }

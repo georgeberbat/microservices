@@ -1,4 +1,7 @@
 using System;
+using Dex.Cap.Outbox.AspNetScheduler;
+using Dex.Cap.Outbox.Ef;
+using Dex.Cap.Outbox.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 using Profile.Dal.Domain;
 using Profile.Dal.Repositories;
@@ -25,6 +28,12 @@ public static class MicrosoftDependencyInjectionExtensions
         // repositories
         services.RegisterGenericRepository();
 
+        services.AddScoped<IWriteUserRepository, WriteUserRepository>();
         services.AddScoped<IReadUserRepository, ReadUserRepository>();
+        
+        // outbox
+        services.AddOutbox<ProfileDbContext>();
+        services.RegisterOutboxScheduler(5);
+        services.AddScoped<IOutboxService<IUnityOfWork>>(provider => provider.GetRequiredService<IOutboxService<ProfileDbContext>>());
     }
 }

@@ -5,7 +5,7 @@ public interface IRegisterUserCommand
     /// <summary>
     /// Номер телефона
     /// </summary>
-    string PhoneNumber { get; }
+    string Phone { get; }
 
     /// <summary>
     /// Пароль

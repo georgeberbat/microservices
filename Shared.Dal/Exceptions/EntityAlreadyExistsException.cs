@@ -25,5 +25,9 @@ namespace Shared.Dal.Exceptions
         public EntityAlreadyExistsException(string message, Exception? ex) : base(message, ex)
         {
         }
+        
+        public EntityAlreadyExistsException(string message) : base(message)
+        {
+        }
     }
 }

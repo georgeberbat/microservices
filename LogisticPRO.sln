@@ -81,6 +81,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiComposition.Models", "Ap
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Profile.gRPC", "Profile.gRPC\Profile.gRPC.csproj", "{C2D86283-F905-44FA-B566-40F9C15DCC76}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Location.Services", "Location.Services\Location.Services.csproj", "{2170011C-890D-49AF-8EA7-CB4391A31E94}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -167,6 +169,10 @@ Global
 		{C2D86283-F905-44FA-B566-40F9C15DCC76}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C2D86283-F905-44FA-B566-40F9C15DCC76}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C2D86283-F905-44FA-B566-40F9C15DCC76}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2170011C-890D-49AF-8EA7-CB4391A31E94}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2170011C-890D-49AF-8EA7-CB4391A31E94}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2170011C-890D-49AF-8EA7-CB4391A31E94}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2170011C-890D-49AF-8EA7-CB4391A31E94}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -205,6 +211,7 @@ Global
 		{4FC00F83-059A-49E4-B391-BD622FB36540} = {E43A67A1-EDE5-4663-9FB4-17B1D4CB54B3}
 		{D5F06604-E187-4582-A137-242F38BA3182} = {80898108-977F-4736-8726-6BAA4C6EBE4F}
 		{C2D86283-F905-44FA-B566-40F9C15DCC76} = {1C165780-E3A0-4957-9F6C-C8F6F8D96DC8}
+		{2170011C-890D-49AF-8EA7-CB4391A31E94} = {06846AAF-8C94-442B-B929-8C3883D69DBC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {94ACF0B9-E8A3-4E9B-AE79-95B2E6BD7CE7}

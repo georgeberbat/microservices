@@ -24,14 +24,14 @@ internal class LocationService : ILocationService
 
     public async Task<IEnumerable<Models.Location>> SearchByName(string substring, CancellationToken cancellationToken)
     {
-        return await _locationRepository.Read.SearchBySubstring(substring, x => nameof(x.Name).ToLowerInvariant(),
+        return await _locationRepository.Read.SearchBySubstring(substring, x => nameof(x.Name),
             cancellationToken);
     }
 
     public async Task<IEnumerable<Models.Location>> SearchByAddress(string substring,
         CancellationToken cancellationToken)
     {
-        return await _locationRepository.Read.SearchBySubstring(substring, x => nameof(x.Address).ToLowerInvariant(),
+        return await _locationRepository.Read.SearchBySubstring(substring, x => nameof(x.Address),
             cancellationToken);
     }
 

@@ -13,9 +13,10 @@ namespace Location.Dal.Repositories
 
         public async Task<IEnumerable<Models.Location>> SearchBySubstring(string substring, Func<Models.Location, string> propertyNameGetter, CancellationToken token)
         {
+            var value = propertyNameGetter(default!);
             return BaseQuery.Where(entity =>
                 EF.Functions.ILike(
-                    EF.Property<string>(entity, propertyNameGetter(default!)),
+                    EF.Property<string>(entity, value),
                     $"%{substring}%"
                 )
             );

@@ -12,7 +12,7 @@ public class RegisterController : BaseAnonymousController
 
     public RegisterController(ProfileClient profileClient)
     {
-        _profileClient = profileClient;
+        _profileClient = profileClient ?? throw new ArgumentNullException(nameof(profileClient));
     }
 
     [HttpPost]

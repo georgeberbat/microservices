@@ -28,7 +28,7 @@ public class LocationGrpcService : LocationGrpc.LocationGrpcBase
     public override async Task<GetLocationsGrpcResponse> SearchByName(SearchByNameGrpcRequest request,
         ServerCallContext context)
     {
-        var locations = await _locationService.SearchByName(request.Substring, context.CancellationToken);
+        var locations = (await _locationService.SearchByName(request.Substring, context.CancellationToken)).ToArray();
         return new GetLocationsGrpcResponse
         {
             Locations = { locations.Select(x => _mapper.Map<LocationGrpcModel>(x)) }
@@ -38,7 +38,8 @@ public class LocationGrpcService : LocationGrpc.LocationGrpcBase
     public override async Task<GetLocationsGrpcResponse> SearchByAddress(SearchByAddressGrpcRequest request,
         ServerCallContext context)
     {
-        var locations = await _locationService.SearchByAddress(request.Substring, context.CancellationToken);
+        var locations = (await _locationService.SearchByAddress(request.Substring, context.CancellationToken))
+            .ToArray();
         return new GetLocationsGrpcResponse
         {
             Locations = { locations.Select(x => _mapper.Map<LocationGrpcModel>(x)) }
@@ -59,7 +60,7 @@ public class LocationGrpcService : LocationGrpc.LocationGrpcBase
     }
 
     public override async Task<Empty> CreateLocation(CreateLocationGrpcRequest request, ServerCallContext context)
-    {
+    { 
         await _locationService.Create(_mapper.Map<Models.Location>(request.Location), context.CancellationToken);
         return new Empty();
     }

@@ -49,8 +49,8 @@ namespace ApiComposition.Api
                 o.Creator = invoker => new LocationGrpc.LocationGrpcClient(invoker) { Name = "composition.client.locationgrpc" };
             });
             
-            // todo: register internal services
             services.AddScoped<ProfileClient>();
+            services.AddScoped<LocationClient>();
             services.AddScoped<IUserIdHttpContextService, UserIdHttpContextService>();
         }
 

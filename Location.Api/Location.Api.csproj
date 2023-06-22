@@ -8,6 +8,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\gRPC.UserStore\gRPC.UserStore.csproj" />
         <ProjectReference Include="..\Location.Dal\Location.Dal.csproj" />
         <ProjectReference Include="..\Location.gRPC\Location.gRPC.csproj" />
         <ProjectReference Include="..\Location.Models\Location.Models.csproj" />
@@ -19,6 +20,13 @@
       <None Update="appsettings.json">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.18">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
     </ItemGroup>
 
 </Project>

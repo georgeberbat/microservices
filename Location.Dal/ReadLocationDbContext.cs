@@ -1,4 +1,5 @@
 using System.Runtime.CompilerServices;
+using GorodPay.Shared.Dal.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Shared.Dal;
 
@@ -28,6 +29,7 @@ namespace Location.Dal
             if (modelBuilder == null) throw new ArgumentNullException(nameof(modelBuilder));
 
             base.OnModelCreating(modelBuilder);
+            modelBuilder.SetDefaultDateTimeKind(DateTimeKind.Utc);
         }
     }
 }

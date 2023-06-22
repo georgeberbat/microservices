@@ -1,7 +1,6 @@
-using IdentityModel.AspNetCore.AccessTokenValidation;
+using gRPC.UserStore.Exception;
 using Location.Dal;
 using Location.Services;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -11,7 +10,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Shared;
 using Shared.Extensions;
-using Shared.Options;
 
 namespace Location.Api
 {
@@ -29,6 +27,14 @@ namespace Location.Api
             services.RegisterDal(connectionString);
 
             services.RegisterInternalServices();
+
+            // grpc
+            services.AddGrpc(options =>
+            {
+                options.Interceptors.Add<ExceptionInterceptor>();
+            });
+            // services.AddGrpc();
+
             // settings
             services.AddOptionsWithDataAnnotationsValidation<TokenOptions>(
                 Configuration.GetSection(nameof(TokenOptions)));
@@ -42,21 +48,6 @@ namespace Location.Api
             base.Configure(app, env);
         }
 
-        protected override void ConfigureAuthorization(AuthorizationSettings authorizationSettings,
-            AuthorizationOptions options)
-        {
-            if (options == null) throw new ArgumentNullException(nameof(options));
-
-            base.ConfigureAuthorization(authorizationSettings, options);
-
-            options.AddPolicy("device-regular_user",
-                policy =>
-                {
-                    policy.RequireAuthenticatedUser();
-                    policy.RequireScope("device-api", "mobile-api");
-                });
-        }
-        
         protected override void ConfigureEndpoints(IEndpointRouteBuilder endpoints)
         {
             base.ConfigureEndpoints(endpoints);

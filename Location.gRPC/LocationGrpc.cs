@@ -1,8 +1,8 @@
 ﻿// ReSharper disable once CheckNamespace
 
-public static partial class ProfileGrpc
+public static partial class LocationGrpc
 {
-    public partial class ProfileGrpcClient
+    public partial class LocationGrpcClient
     {
         public string Name { get; set; }
     }

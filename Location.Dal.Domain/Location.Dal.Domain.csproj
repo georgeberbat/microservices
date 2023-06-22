@@ -7,14 +7,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Location.Dal.Domain\Location.Dal.Domain.csproj" />
       <ProjectReference Include="..\Location.Models\Location.Models.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Compile Update="LocationService.cs">
-        <DependentUpon>ILocationService.cs</DependentUpon>
-      </Compile>
+      <ProjectReference Include="..\Shared.Dal\Shared.Dal.csproj" />
     </ItemGroup>
 
 </Project>

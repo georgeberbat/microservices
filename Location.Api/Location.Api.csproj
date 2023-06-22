@@ -8,7 +8,10 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\Location.Dal\Location.Dal.csproj" />
+        <ProjectReference Include="..\Location.gRPC\Location.gRPC.csproj" />
         <ProjectReference Include="..\Location.Models\Location.Models.csproj" />
+        <ProjectReference Include="..\Location.Services\Location.Services.csproj" />
         <ProjectReference Include="..\Shared\Shared.csproj" />
     </ItemGroup>
 

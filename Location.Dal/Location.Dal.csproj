@@ -7,7 +7,10 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="Dex.Cap.Outbox.AspNetScheduler" Version="1.4.30" />
+        <PackageReference Include="Dex.Cap.Outbox.Ef" Version="1.7.36" />
         <PackageReference Include="Dex.Ef" Version="1.0.25" />
+        <ProjectReference Include="..\Location.Dal.Domain\Location.Dal.Domain.csproj" />
         <ProjectReference Include="..\Location.Models\Location.Models.csproj" />
         <ProjectReference Include="..\Shared.Dal\Shared.Dal.csproj" />
     </ItemGroup>

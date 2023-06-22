@@ -2,7 +2,7 @@
 
 namespace Location.Models;
 
-public class Location : IDeletable, ICreatedUtc, IUpdatedUtc
+public class Location : IDeletable, ICreatedUtc, IUpdatedUtc, IEntity<Guid>
 {
     public Guid Id { get; set; }
     public string Name { get; set; } = null!;

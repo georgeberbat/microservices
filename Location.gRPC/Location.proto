@@ -1,0 +1,54 @@
+﻿syntax = "proto3";
+import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+
+message LocationGrpcModel {
+  string id = 1;
+  string name = 2;
+  string address = 3;
+  double latitude = 4;
+  double longitude = 5;
+  google.protobuf.Timestamp deleted_utc = 6;
+  google.protobuf.Timestamp created_utc = 7;
+  google.protobuf.Timestamp updated_utc = 8;
+}
+message GetLocationsGrpcResponse {
+  repeated LocationGrpcModel locations = 1;
+}
+
+message SearchByNameGrpcRequest {
+  string substring = 1;
+}
+
+message SearchByAddressGrpcRequest {
+  string substring = 1;
+}
+
+message SearchByAreaGrpcRequest {
+  double min_latitude = 1;
+  double max_latitude = 2;
+  double min_longitude = 3;
+  double max_longitude = 4;
+}
+
+message CreateLocationGrpcRequest {
+  LocationGrpcModel location = 1;
+}
+
+message UpdateLocationGrpcRequest {
+  LocationGrpcModel location = 1;
+}
+
+message DeleteLocationGrpcRequest {
+  string id = 1;
+}
+
+service LocationGrpc {
+  rpc GetLocations(google.protobuf.Empty) returns (GetLocationsGrpcResponse);
+  rpc SearchByName(SearchByNameGrpcRequest) returns (GetLocationsGrpcResponse);
+  rpc SearchByAddress(SearchByAddressGrpcRequest) returns (GetLocationsGrpcResponse);
+  rpc SearchByArea(SearchByAreaGrpcRequest) returns (GetLocationsGrpcResponse);
+  rpc CreateLocation(CreateLocationGrpcRequest) returns (google.protobuf.Empty);
+  rpc UpdateLocation(UpdateLocationGrpcRequest) returns (google.protobuf.Empty);
+  rpc DeleteLocation(DeleteLocationGrpcRequest) returns (google.protobuf.Empty);
+}

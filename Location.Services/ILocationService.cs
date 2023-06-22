@@ -2,12 +2,14 @@
 
 public interface ILocationService
 {
-    IEnumerable<Models.Location> Get();
-    IEnumerable<Models.Location> SearchByName(string substring);
-    IEnumerable<Models.Location> SearchByAddress(string substring);
-    IEnumerable<Models.Location> SearchByArea(double minLatitude, double maxLatitude, double minLongitude, double maxLongitude);
-    
-    void Create(Models.Location location);
-    void Update(Models.Location location);
-    void Delete(Guid id);
+    Task<IEnumerable<Models.Location>> Get(CancellationToken cancellationToken);
+    Task<IEnumerable<Models.Location>> SearchByName(string substring, CancellationToken cancellationToken);
+    Task<IEnumerable<Models.Location>> SearchByAddress(string substring, CancellationToken cancellationToken);
+
+    Task<IEnumerable<Models.Location>> SearchByArea(double minLatitude, double maxLatitude, double minLongitude,
+        double maxLongitude, CancellationToken cancellationToken);
+
+    Task Create(Models.Location location, CancellationToken cancellationToken);
+    Task Update(Models.Location location, CancellationToken cancellationToken);
+    Task Delete(Guid id, CancellationToken cancellationToken);
 }

@@ -7,10 +7,13 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="Dex.Cap.Outbox.AspNetScheduler" Version="1.4.30" />
+        <PackageReference Include="Dex.Cap.Outbox.Ef" Version="1.7.36" />
         <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.10" />
     </ItemGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\Tariff.Dal.Domain\Tariff.Dal.Domain.csproj" />
         <ProjectReference Include="..\Tariff.Models\Tariff.Models.csproj" />
         <ProjectReference Include="..\Shared.Dal\Shared.Dal.csproj" />
     </ItemGroup>

@@ -2,14 +2,14 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Tariff.Models;
 
-namespace Tariff.Dal;
+namespace Tariff.Dal.EntityConfigurations;
 
 
 public class RouteUnitConfiguration : IEntityTypeConfiguration<RouteUnit>
 {
     public void Configure(EntityTypeBuilder<RouteUnit> builder)
     {
-        builder.ToTable("RouteUnit");
+        builder.ToTable("route_unit");
         builder.HasKey(ru => ru.Id);
 
         builder.Property(ru => ru.Id).HasColumnName("id");
@@ -21,13 +21,13 @@ public class RouteUnitConfiguration : IEntityTypeConfiguration<RouteUnit>
         builder.HasOne(ru => ru.Route)
             .WithMany()
             .HasForeignKey(ru => ru.RouteId)
-            .OnDelete(DeleteBehavior.Restrict)
+            .OnDelete(DeleteBehavior.Cascade)
             .HasConstraintName("FK_RouteUnit_Route");
 
         builder.HasOne(ru => ru.Tariff)
             .WithMany()
             .HasForeignKey(ru => ru.TariffId)
-            .OnDelete(DeleteBehavior.Restrict)
+            .OnDelete(DeleteBehavior.Cascade)
             .HasConstraintName("FK_RouteUnit_Tariff");
     }
 }

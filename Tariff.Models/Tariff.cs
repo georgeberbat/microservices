@@ -2,7 +2,7 @@
 
 namespace Tariff.Models;
 
-public class Tariff : ICreatedUtc, IUpdatedUtc, IDeletable
+public class Tariff : ICreatedUtc, IUpdatedUtc, IDeletable, IEntity<Guid>
 {
     public Guid Id { get; set; }
     public Guid UserId { get; set; }
@@ -11,4 +11,5 @@ public class Tariff : ICreatedUtc, IUpdatedUtc, IDeletable
     public DateTime UpdatedUtc { get; set; }
     public DateTime? DeletedUtc { get; set; }
     public IEnumerable<TariffUnit>? TariffUnits { get; set; }
+    public IEnumerable<UserTariffPermissions>? TariffPermissions { get; set; }
 }

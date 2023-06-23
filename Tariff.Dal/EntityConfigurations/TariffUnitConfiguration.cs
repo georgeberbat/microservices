@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Tariff.Models;
 
-namespace Tariff.Dal;
+namespace Tariff.Dal.EntityConfigurations;
 
 public class TariffUnitConfiguration : IEntityTypeConfiguration<TariffUnit>
 {

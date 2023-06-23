@@ -10,4 +10,5 @@ public class Route : ICreatedUtc
     public string? Description { get; set; }
     public DateTime CreatedUtc { get; set; }
     public IEnumerable<RouteUnit>? RouteUnits { get; set; }
+    public IEnumerable<UserRoutePermissions>? RoutePermissions { get; set; }
 }

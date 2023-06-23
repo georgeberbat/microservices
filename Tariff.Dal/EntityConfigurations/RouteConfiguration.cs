@@ -2,13 +2,13 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Tariff.Models;
 
-namespace Tariff.Dal;
+namespace Tariff.Dal.EntityConfigurations;
 
 public class RouteConfiguration : IEntityTypeConfiguration<Route>
 {
     public void Configure(EntityTypeBuilder<Route> builder)
     {
-        builder.ToTable("Route");
+        builder.ToTable("route");
         builder.HasKey(r => r.Id);
 
         builder.Property(r => r.Id).HasColumnName("id");
@@ -20,7 +20,14 @@ public class RouteConfiguration : IEntityTypeConfiguration<Route>
         builder.HasMany(r => r.RouteUnits)
             .WithOne(ru => ru.Route)
             .HasForeignKey(ru => ru.RouteId)
-            .OnDelete(DeleteBehavior.Restrict)
+            .OnDelete(DeleteBehavior.Cascade)
             .HasConstraintName("FK_RouteUnit_Route");
+        
+        
+        builder.HasMany(r => r.RoutePermissions)
+            .WithOne(ru => ru.Route)
+            .HasForeignKey(ru => ru.RouteId)
+            .OnDelete(DeleteBehavior.Cascade)
+            .HasConstraintName("FK_RoutePermission_Route");
     }
 }

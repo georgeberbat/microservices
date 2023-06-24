@@ -1,0 +1,79 @@
+﻿syntax = "proto3";
+
+package routingservice;
+
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/empty.proto";
+
+message Route {
+  string id = 1;
+  string user_id = 2;
+  string name = 3;
+  string description = 4;
+  google.protobuf.Timestamp created_utc = 5;
+  repeated RouteUnit route_units = 6;
+}
+
+message RouteUnit {
+  string id = 1;
+  string parent_id = 2;
+  string tariff_id = 3;
+  google.protobuf.Timestamp created_utc = 4;
+  google.protobuf.Timestamp updated_utc = 5;
+}
+
+message GetRoutesRequest {
+  string user_id = 1;
+}
+
+message GetRoutesResponse {
+  repeated Route routes = 1;
+}
+
+message CreateRouteRequest {
+  string user_id = 1;
+  Route route = 2;
+}
+
+message CreateRouteResponse {
+  string route_id = 1;
+}
+
+message UpdateRouteRequest {
+  string user_id = 1;
+  Route route = 2;
+}
+
+message DeleteRouteRequest {
+  string user_id = 1;
+  string route_id = 2;
+}
+
+message CreateRouteUnitsRequest {
+  string user_id = 1;
+  repeated RouteUnit route_units = 2;
+}
+
+message CreateRouteUnitsResponse {
+  repeated string unit_ids = 1;
+}
+
+message UpdateRouteUnitsRequest {
+  string user_id = 1;
+  repeated RouteUnit route_units = 2;
+}
+
+message DeleteRouteUnitsRequest {
+  string user_id = 1;
+  repeated string unit_ids = 2;
+}
+
+service RouteService {
+  rpc GetRoutes(GetRoutesRequest) returns (GetRoutesResponse);
+  rpc CreateRoute(CreateRouteRequest) returns (CreateRouteResponse);
+  rpc UpdateRoute(UpdateRouteRequest) returns (google.protobuf.Empty);
+  rpc DeleteRoute(DeleteRouteRequest) returns (google.protobuf.Empty);
+  rpc CreateRouteUnits(CreateRouteUnitsRequest) returns (CreateRouteUnitsResponse);
+  rpc UpdateRouteUnits(UpdateRouteUnitsRequest) returns (google.protobuf.Empty);
+  rpc DeleteRouteUnits(DeleteRouteUnitsRequest) returns (google.protobuf.Empty);
+}

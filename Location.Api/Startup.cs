@@ -33,7 +33,6 @@ namespace Location.Api
             {
                 options.Interceptors.Add<ExceptionInterceptor>();
             });
-            // services.AddGrpc();
 
             // settings
             services.AddOptionsWithDataAnnotationsValidation<TokenOptions>(

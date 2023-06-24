@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Dex.Ef.Contracts.Entities;
@@ -14,5 +15,8 @@ namespace Shared.Dal
         Task<T> GetBySpecAsync(Specification<T> specification, CancellationToken cancellation);
 
         Task<T[]> FilterAsync(Specification<T> specification, CancellationToken cancellation);
+
+        Task<IEnumerable<T>> SearchBySubstring(string substring, Func<T, string> propertyNameGetter,
+            CancellationToken token);
     }
 }

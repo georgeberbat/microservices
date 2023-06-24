@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -43,6 +44,17 @@ namespace Shared.Dal
             if (specification == null) throw new ArgumentNullException(nameof(specification));
 
             return BaseQuery.Where(specification).ToArrayAsync(cancellation);
+        }
+        
+        public async Task<IEnumerable<T>> SearchBySubstring(string substring, Func<T, string> propertyNameGetter, CancellationToken token)
+        {
+            var value = propertyNameGetter(default!);
+            return BaseQuery.Where(entity =>
+                EF.Functions.ILike(
+                    EF.Property<string>(entity, value),
+                    $"%{substring}%"
+                )
+            );
         }
     }
 }

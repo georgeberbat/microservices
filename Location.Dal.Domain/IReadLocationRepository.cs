@@ -4,7 +4,6 @@ namespace Location.Dal.Domain
 {
     public interface IReadLocationRepository : IReadRepository<Models.Location, Guid>
     {
-        Task<IEnumerable<Models.Location>> SearchBySubstring(string substring,
-            Func<Models.Location, string> propertyNameGetter, CancellationToken token);
+        Task CheckExistence(IEnumerable<Guid> ids, CancellationToken cancellationToken);
     }
 }

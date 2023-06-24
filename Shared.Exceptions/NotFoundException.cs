@@ -1,7 +1,7 @@
 ﻿namespace Shared.Exceptions
 {
     /// <remarks>Status: 404</remarks>
-    public abstract class NotFoundException : UserException
+    public abstract class NotFoundException : Exception
     {
         protected NotFoundException()
         {

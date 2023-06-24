@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
-using Dex.Extensions;
-using Google.Protobuf.WellKnownTypes;
-using Shared.Helpers;
+using Tariff.Models;
+
 
 namespace Tariff.Api.Mapping;
 
@@ -26,5 +25,32 @@ public class Main : Profile
         //     .ForMember(x => x.CreatedUtc, x => x.MapFrom(y =>
         //         Timestamp.FromDateTime(y.CreatedUtc.SetUtcKind())))
         //     .ForMember(x => x.Id, x => x.MapFrom(y => y.Id.ToString()));
+
+
+        CreateMap<Route, Route>()
+            .ForMember(x => x.Id, x => x.Ignore())
+            .ForMember(x => x.UserId, x => x.Ignore())
+            .ForMember(x => x.CreatedUtc, x => x.Ignore())
+            .ForMember(x => x.RouteUnits, x => x.Ignore());
+
+        CreateMap<RouteUnit, RouteUnit>()
+            .ForMember(x => x.Id, x => x.Ignore())
+            .ForMember(x => x.CreatedUtc, x => x.Ignore())
+            .ForMember(x => x.Route, x => x.Ignore())
+            .ForMember(x => x.Tariff, x => x.Ignore())
+            .ForMember(x => x.UpdatedUtc, x => x.Ignore());
+        
+        CreateMap<Models.Tariff, Models.Tariff>()
+            .ForMember(x => x.Id, x => x.Ignore())
+            .ForMember(x => x.UserId, x => x.Ignore())
+            .ForMember(x => x.CreatedUtc, x => x.Ignore())
+            .ForMember(x => x.DeletedUtc, x => x.Ignore())
+            .ForMember(x => x.TariffUnits, x => x.Ignore());
+        
+        CreateMap<TariffUnit, TariffUnit>()
+            .ForMember(x => x.Id, x => x.Ignore())
+            .ForMember(x => x.CreatedUtc, x => x.Ignore())
+            .ForMember(x => x.Tariff, x => x.Ignore())
+            .ForMember(x => x.UpdatedUtc, x => x.Ignore());
     }
 }

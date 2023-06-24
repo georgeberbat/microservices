@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Shared.Dal;
 using Shared.Dal.Extensions;
 using Tariff.Dal.Domain;
+using Tariff.Dal.Domain.Tariff;
 using Tariff.Dal.Repositories;
 
 namespace Tariff.Dal;
@@ -29,6 +30,15 @@ public static class MicrosoftDependencyInjectionExtensions
 
         services.AddScoped<IWriteTariffRepository, WriteTariffRepository>();
         services.AddScoped<IReadTariffRepository, ReadTariffRepository>();
+
+        services.AddScoped<IWriteTariffUnitRepository, WriteTariffUnitRepository>();
+        services.AddScoped<IReadTariffUnitRepository, ReadTariffUnitRepository>();
+
+        services.AddScoped<IWriteRouteRepository, WriteRouteRepository>();
+        services.AddScoped<IReadRouteRepository, ReadRouteRepository>();
+
+        services.AddScoped<IWriteRouteUnitRepository, WriteRouteUnitRepository>();
+        services.AddScoped<IReadRouteUnitRepository, ReadRouteUnitRepository>();
         
         // outbox
         services.AddOutbox<TariffDbContext>();

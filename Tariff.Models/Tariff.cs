@@ -10,6 +10,5 @@ public class Tariff : ICreatedUtc, IUpdatedUtc, IDeletable, IEntity<Guid>
     public DateTime CreatedUtc { get; set; }
     public DateTime UpdatedUtc { get; set; }
     public DateTime? DeletedUtc { get; set; }
-    public IEnumerable<TariffUnit>? TariffUnits { get; set; }
-    public IEnumerable<UserTariffPermissions>? TariffPermissions { get; set; }
+    public ICollection<TariffUnit>? TariffUnits { get; set; }
 }

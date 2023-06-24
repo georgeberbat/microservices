@@ -1,5 +1,4 @@
 ﻿using Location.Dal.Domain;
-using Microsoft.EntityFrameworkCore;
 using Shared.Dal;
 
 namespace Location.Dal.Repositories
@@ -11,15 +10,9 @@ namespace Location.Dal.Repositories
         {
         }
 
-        public async Task<IEnumerable<Models.Location>> SearchBySubstring(string substring, Func<Models.Location, string> propertyNameGetter, CancellationToken token)
+        public Task CheckExistence(IEnumerable<Guid> ids, CancellationToken cancellationToken)
         {
-            var value = propertyNameGetter(default!);
-            return BaseQuery.Where(entity =>
-                EF.Functions.ILike(
-                    EF.Property<string>(entity, value),
-                    $"%{substring}%"
-                )
-            );
+            throw new NotSupportedException();
         }
     }
 }

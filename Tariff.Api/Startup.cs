@@ -1,4 +1,5 @@
 ﻿using gRPC.UserStore.Exception;
+using Location.Services;
 using Tariff.Dal;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -25,14 +26,13 @@ namespace Tariff.Api
             var connectionString = Configuration.GetConnectionString("DefaultConnection");
             services.RegisterDal(connectionString);
 
-            // services.RegisterInternalServices();
+            services.RegisterInternalServices();
 
             // grpc
             services.AddGrpc(options =>
             {
                 options.Interceptors.Add<ExceptionInterceptor>();
             });
-            // services.AddGrpc();
 
             // settings
             services.AddOptionsWithDataAnnotationsValidation<TokenOptions>(

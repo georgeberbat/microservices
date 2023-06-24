@@ -19,15 +19,8 @@ public class RouteConfiguration : IEntityTypeConfiguration<Route>
 
         builder.HasMany(r => r.RouteUnits)
             .WithOne(ru => ru.Route)
-            .HasForeignKey(ru => ru.RouteId)
+            .HasForeignKey(ru => ru.ParentId)
             .OnDelete(DeleteBehavior.Cascade)
             .HasConstraintName("FK_RouteUnit_Route");
-        
-        
-        builder.HasMany(r => r.RoutePermissions)
-            .WithOne(ru => ru.Route)
-            .HasForeignKey(ru => ru.RouteId)
-            .OnDelete(DeleteBehavior.Cascade)
-            .HasConstraintName("FK_RoutePermission_Route");
     }
 }

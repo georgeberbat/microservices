@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Internal;
 using Shared.Dal;
 using Tariff.Dal.Domain;
+using Tariff.Dal.Domain.Tariff;
 
 namespace Tariff.Dal.Repositories
 {

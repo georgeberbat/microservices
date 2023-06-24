@@ -18,4 +18,8 @@
         
         <Protobuf Include="UserStore.proto" />
     </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Shared.Exceptions\Shared.Exceptions.csproj" />
+    </ItemGroup>
 </Project>

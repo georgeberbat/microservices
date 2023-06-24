@@ -1,5 +1,4 @@
-﻿using GorodPay.Shared.Dal;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
+﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace Shared.Dal
 {

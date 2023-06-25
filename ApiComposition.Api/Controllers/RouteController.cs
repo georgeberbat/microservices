@@ -1,4 +1,5 @@
 ﻿using ApiComposition.Api.GrpcClients;
+using ApiComposition.Api.ServiceModel;
 using Microsoft.AspNetCore.Mvc;
 using Shared.Controllers;
 using Shared.Interfaces;
@@ -70,13 +71,13 @@ public class RouteController : BaseController
     }
 
     [HttpPost]
-    public async Task<IActionResult> CreateRouteUnits(IEnumerable<RouteUnitGrpc> routeUnits,
+    public async Task<IActionResult> CreateRouteUnits([FromBody] ArrayRequest<RouteUnitGrpc> routeUnits,
         CancellationToken cancellationToken)
     {
         var response =
             await _routeClient.CreateRouteUnits(new CreateRouteUnitsRequestGrpc
                 {
-                    RouteUnits = { routeUnits },
+                    RouteUnits = { routeUnits.Items },
                     UserId = _userId.UserId.ToString()
                 },
                 cancellationToken);
@@ -86,12 +87,12 @@ public class RouteController : BaseController
 
 
     [HttpPut]
-    public async Task<IActionResult> UpdateRouteUnits(IEnumerable<RouteUnitGrpc> routeUnits,
+    public async Task<IActionResult> UpdateRouteUnits(ArrayRequest<RouteUnitGrpc> routeUnits,
         CancellationToken cancellationToken)
     {
         await _routeClient.UpdateRouteUnits(new UpdateRouteUnitsRequestGrpc
             {
-                RouteUnits = { routeUnits },
+                RouteUnits = { routeUnits.Items },
                 UserId = _userId.UserId.ToString()
             },
             cancellationToken);

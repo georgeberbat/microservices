@@ -1,4 +1,5 @@
-﻿using Shared.Dal;
+﻿using Microsoft.EntityFrameworkCore;
+using Shared.Dal;
 using Tariff.Dal.Domain.Tariff;
 
 namespace Tariff.Dal.Repositories
@@ -9,7 +10,7 @@ namespace Tariff.Dal.Repositories
             : base(readDbContext)
         {
         }
-        
+
         public Task CheckExistence(IEnumerable<Guid> ids, CancellationToken cancellationToken)
         {
             var exists = BaseQuery.Where(x => ids.Contains(x.Id)).Select(x => x.Id);
@@ -21,5 +22,7 @@ namespace Tariff.Dal.Repositories
 
             return Task.FromResult(true);
         }
+
+        protected override IQueryable<Models.Tariff> BaseQuery => base.BaseQuery.Include(x => x.TariffUnits);
     }
 }

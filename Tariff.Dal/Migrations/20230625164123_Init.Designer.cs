@@ -12,7 +12,7 @@ using Tariff.Dal;
 namespace Tariff.Dal.Migrations
 {
     [DbContext(typeof(TariffDbContext))]
-    [Migration("20230625134134_Init")]
+    [Migration("20230625164123_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -97,46 +97,53 @@ namespace Tariff.Dal.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
 
                     b.Property<DateTime>("CreatedUtc")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("created_utc");
 
                     b.Property<string>("Description")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("description");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("name");
 
                     b.Property<Guid>("UserId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("user_id");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Route");
+                    b.ToTable("route", (string)null);
                 });
 
             modelBuilder.Entity("Tariff.Models.RouteUnit", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
 
                     b.Property<DateTime>("CreatedUtc")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("created_utc");
 
-                    b.Property<Guid>("ParentId")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid?>("RouteId")
-                        .HasColumnType("uuid");
+                    b.Property<Guid>("RouteId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("route_id");
 
                     b.Property<Guid>("TariffId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("tariff_id");
 
                     b.Property<DateTime>("UpdatedUtc")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("updated_utc");
 
                     b.HasKey("Id");
 
@@ -144,84 +151,97 @@ namespace Tariff.Dal.Migrations
 
                     b.HasIndex("TariffId");
 
-                    b.ToTable("RouteUnit");
+                    b.ToTable("route_unit", (string)null);
                 });
 
             modelBuilder.Entity("Tariff.Models.Tariff", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
 
                     b.Property<DateTime>("CreatedUtc")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("created_utc");
 
                     b.Property<DateTime?>("DeletedUtc")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("deleted_utc");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("name");
 
                     b.Property<DateTime>("UpdatedUtc")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("updated_utc");
 
                     b.Property<Guid>("UserId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("user_id");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Tariff");
+                    b.ToTable("tariff", (string)null);
                 });
 
             modelBuilder.Entity("Tariff.Models.TariffUnit", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
 
                     b.Property<DateTime>("CreatedUtc")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<int>("Distance")
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("distance");
 
                     b.Property<Guid>("LocationId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("location_id");
 
                     b.Property<Guid>("NextLocationId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("next_location_id");
 
-                    b.Property<Guid>("ParentId")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid?>("TariffId")
-                        .HasColumnType("uuid");
+                    b.Property<Guid>("TariffId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("tariff_id");
 
                     b.Property<DateTime>("UpdatedUtc")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<double>("WeightScaleCoefficient")
-                        .HasColumnType("double precision");
+                        .HasColumnType("double precision")
+                        .HasColumnName("weight_scale_coefficient");
 
                     b.HasKey("Id");
 
                     b.HasIndex("TariffId");
 
-                    b.ToTable("TariffUnit");
+                    b.ToTable("tariff_unit", (string)null);
                 });
 
             modelBuilder.Entity("Tariff.Models.RouteUnit", b =>
                 {
                     b.HasOne("Tariff.Models.Route", "Route")
                         .WithMany("RouteUnits")
-                        .HasForeignKey("RouteId");
+                        .HasForeignKey("RouteId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("FK_RouteUnit_Route");
 
                     b.HasOne("Tariff.Models.Tariff", "Tariff")
                         .WithMany()
                         .HasForeignKey("TariffId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("FK_RouteUnit_Tariff");
 
                     b.Navigation("Route");
 
@@ -232,7 +252,10 @@ namespace Tariff.Dal.Migrations
                 {
                     b.HasOne("Tariff.Models.Tariff", "Tariff")
                         .WithMany("TariffUnits")
-                        .HasForeignKey("TariffId");
+                        .HasForeignKey("TariffId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("FK_TariffUnit_Tariff");
 
                     b.Navigation("Tariff");
                 });

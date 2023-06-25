@@ -52,14 +52,14 @@ namespace ApiComposition.Api
             {
                 var options = p.GetRequiredService<IOptions<GrpcClientsOptions>>();
                 o.Address = new Uri(options.Value.TariffServiceUrl);
-                o.Creator = invoker => new LocationGrpc.LocationGrpcClient(invoker) { Name = "composition.client.routegrpc" };
+                o.Creator = invoker => new RouteServiceGrpc.RouteServiceGrpcClient(invoker) { Name = "composition.client.routegrpc" };
             });
             
             services.AddGrpcClient<TariffServiceGrpc.TariffServiceGrpcClient>("composition.client.tariffgrpc", (p, o) =>
             {
                 var options = p.GetRequiredService<IOptions<GrpcClientsOptions>>();
                 o.Address = new Uri(options.Value.TariffServiceUrl);
-                o.Creator = invoker => new LocationGrpc.LocationGrpcClient(invoker) { Name = "composition.client.tariffgrpc" };
+                o.Creator = invoker => new TariffServiceGrpc.TariffServiceGrpcClient(invoker) { Name = "composition.client.tariffgrpc" };
             });
             
             services.AddScoped<ProfileClient>();

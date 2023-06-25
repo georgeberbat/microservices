@@ -1,6 +1,4 @@
-﻿using Shared.Extensions;
-
-namespace Shared.Exceptions
+﻿namespace Shared.Exceptions
 {
     /// <remarks>Status: 400</remarks>
     public class BadRequestException : UserException

@@ -1,5 +1,6 @@
 ﻿using Location.Dal.Domain;
 using Shared.Dal;
+using Shared.Exceptions;
 
 namespace Location.Dal.Repositories
 {
@@ -8,11 +9,6 @@ namespace Location.Dal.Repositories
         public ReadLocationRepository(IReadDbContext readDbContext)
             : base(readDbContext)
         {
-        }
-
-        public Task CheckExistence(IEnumerable<Guid> ids, CancellationToken cancellationToken)
-        {
-            throw new NotSupportedException();
         }
     }
 }

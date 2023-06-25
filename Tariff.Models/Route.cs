@@ -9,5 +9,5 @@ public class Route : ICreatedUtc, IEntity<Guid>
     public string Name { get; set; } = null!;
     public string? Description { get; set; }
     public DateTime CreatedUtc { get; set; }
-    public ICollection<RouteUnit>? RouteUnits { get; set; }
+    public virtual ICollection<RouteUnit>? RouteUnits { get; set; }
 }

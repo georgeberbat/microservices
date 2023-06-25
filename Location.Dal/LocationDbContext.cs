@@ -1,6 +1,7 @@
 using System.Runtime.CompilerServices;
 using Dex.Cap.Outbox.Ef;
 using GorodPay.Shared.Dal.Extensions;
+using Location.Dal.EntityConfigurations;
 using Microsoft.EntityFrameworkCore;
 using Shared.Dal;
 
@@ -26,6 +27,8 @@ namespace Location.Dal
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             if (modelBuilder == null) throw new ArgumentNullException(nameof(modelBuilder));
+
+            modelBuilder.ApplyConfiguration(new LocationConfiguration());
 
             base.OnModelCreating(modelBuilder);
             modelBuilder.SetDefaultDateTimeKind(DateTimeKind.Utc);

@@ -13,6 +13,7 @@
     </ItemGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\FakeData\FakeData.csproj" />
         <ProjectReference Include="..\Location.Dal.Domain\Location.Dal.Domain.csproj" />
         <ProjectReference Include="..\Location.Models\Location.Models.csproj" />
         <ProjectReference Include="..\Tariff.Dal.Domain\Tariff.Dal.Domain.csproj" />

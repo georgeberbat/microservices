@@ -16,21 +16,21 @@ namespace Location.Dal.Migrations
                 .Annotation("Npgsql:PostgresExtension:uuid-ossp", ",,");
 
             migrationBuilder.CreateTable(
-                name: "Locations",
+                name: "location",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    Name = table.Column<string>(type: "text", nullable: false),
-                    Address = table.Column<string>(type: "text", nullable: false),
-                    Latitude = table.Column<double>(type: "double precision", nullable: false),
-                    Longitude = table.Column<double>(type: "double precision", nullable: false),
-                    DeletedUtc = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    CreatedUtc = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    UpdatedUtc = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                    name = table.Column<string>(type: "text", nullable: false),
+                    address = table.Column<string>(type: "text", nullable: false),
+                    latitude = table.Column<double>(type: "double precision", nullable: false),
+                    longitude = table.Column<double>(type: "double precision", nullable: false),
+                    deleted_utc = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    created_utc = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    updated_utc = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Locations", x => x.Id);
+                    table.PrimaryKey("id", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -57,6 +57,16 @@ namespace Location.Dal.Migrations
                 {
                     table.PrimaryKey("PK_outbox", x => x.Id);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_location_created_utc",
+                table: "location",
+                column: "created_utc");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_location_updated_utc",
+                table: "location",
+                column: "updated_utc");
 
             migrationBuilder.CreateIndex(
                 name: "IX_outbox_CorrelationId",
@@ -87,7 +97,7 @@ namespace Location.Dal.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Locations");
+                name: "location");
 
             migrationBuilder.DropTable(
                 name: "outbox",

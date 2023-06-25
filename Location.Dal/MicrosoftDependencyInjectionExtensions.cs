@@ -46,7 +46,6 @@ namespace Location.Dal.Public
         public static void RegisterLocationReadonlyDal(this IServiceCollection services, string connectionString)
         {
             services.AddDbContext<ReadLocationDbContext>(connectionString, noTracking: true);
-            services.AddScoped<IReadLocationRepository, ReadLocationRepository>();
         }
     }
 }

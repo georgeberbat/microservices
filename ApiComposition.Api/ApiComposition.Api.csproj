@@ -21,8 +21,4 @@
       <ProjectReference Include="..\Tariff.gRPC\Tariff.gRPC.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="ServiceModel\Location" />
-    </ItemGroup>
-
 </Project>

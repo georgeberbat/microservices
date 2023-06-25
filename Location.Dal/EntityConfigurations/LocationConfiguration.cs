@@ -8,7 +8,7 @@ public class LocationConfiguration : IEntityTypeConfiguration<Models.Location>
     public void Configure(EntityTypeBuilder<Models.Location> builder)
     {
         builder.ToTable("location");
-        builder.HasKey(l => l.Id);
+        builder.HasKey(l => l.Id).HasName("id");
         builder.Property(l => l.Name).HasColumnName("name").IsRequired();
         builder.Property(l => l.Address).HasColumnName("address").IsRequired();
         builder.Property(l => l.Latitude).HasColumnName("latitude");

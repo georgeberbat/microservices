@@ -30,7 +30,7 @@ public class TariffGrpcService : TariffServiceGrpc.TariffServiceGrpcBase
     public override async Task<CreateTariffResponseGrpc> CreateTariff(CreateTariffRequestGrpc request,
         ServerCallContext context)
     {
-        var id = await _tariffService.Create(Guid.Parse(request.UserId), _mapper.Map<Models.Tariff>(request.Tariff),
+        var id = await _tariffService.Create(Guid.Parse(request.UserId), _mapper.Map<Models.Tariff>(request),
             context.CancellationToken);
         return new CreateTariffResponseGrpc
         {
@@ -40,7 +40,7 @@ public class TariffGrpcService : TariffServiceGrpc.TariffServiceGrpcBase
 
     public override async Task<Empty> UpdateTariff(UpdateTariffRequestGrpc request, ServerCallContext context)
     {
-        await _tariffService.Update(Guid.Parse(request.UserId), _mapper.Map<Models.Tariff>(request.Tariff),
+        await _tariffService.Update(Guid.Parse(request.UserId), _mapper.Map<Models.Tariff>(request),
             context.CancellationToken);
 
         return new Empty();

@@ -1,4 +1,5 @@
 ﻿using ApiComposition.Api.GrpcClients;
+using ApiComposition.Api.ServiceModel;
 using Microsoft.AspNetCore.Mvc;
 using Shared.Controllers;
 using Shared.Interfaces;
@@ -17,7 +18,7 @@ public class TariffController : BaseController
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetRoutes(CancellationToken cancellationToken)
+    public async Task<IActionResult> GetTariffs(CancellationToken cancellationToken)
     {
         var response =
             await _tariffClient.GetTariffs(new GetTariffsRequestGrpc { UserId = _userId.UserId.ToString() },
@@ -70,13 +71,13 @@ public class TariffController : BaseController
     }
 
     [HttpPost]
-    public async Task<IActionResult> CreateTariffUnits(IEnumerable<TariffUnitGrpc> tariffUnits,
+    public async Task<IActionResult> CreateTariffUnits(ArrayRequest<TariffUnitGrpc> tariffUnits,
         CancellationToken cancellationToken)
     {
         var response =
             await _tariffClient.CreateTariffUnits(new CreateTariffUnitsRequestGrpc
                 {
-                    TariffUnits = { tariffUnits },
+                    TariffUnits = { tariffUnits.Items },
                     UserId = _userId.UserId.ToString()
                 },
                 cancellationToken);
@@ -86,12 +87,12 @@ public class TariffController : BaseController
 
 
     [HttpPut]
-    public async Task<IActionResult> UpdateTariffUnits(IEnumerable<TariffUnitGrpc> tariffUnits,
+    public async Task<IActionResult> UpdateTariffUnits(ArrayRequest<TariffUnitGrpc> tariffUnits,
         CancellationToken cancellationToken)
     {
         await _tariffClient.UpdateTariffUnits(new UpdateTariffUnitsRequestGrpc
             {
-                TariffUnits = { tariffUnits },
+                TariffUnits = { tariffUnits.Items },
                 UserId = _userId.UserId.ToString()
             },
             cancellationToken);

@@ -72,10 +72,10 @@ public class RouteService : IRouteService
         units = units as RouteUnit[] ?? units.ToArray();
         if (!units.Any()) return ArraySegment<Guid>.Empty;
 
-        var routeId = units.First().Id;
-        if (units.Any(x => x.ParentId != routeId))
+        var routeId = units.First().RouteId;
+        if (units.Any(x => x.RouteId != routeId))
         {
-            throw new BadRequestException(units.Where(x => x.ParentId != routeId)
+            throw new BadRequestException(units.Where(x => x.RouteId != routeId)
                 .Select(x => (nameof(units), (object)x)).ToArray());
         }
 
@@ -90,10 +90,9 @@ public class RouteService : IRouteService
         foreach (var unit in units)
         {
             unit.Id = Guid.NewGuid();
-            route.RouteUnits!.Add(unit);
+            await _writeRouteUnitRepository.AddAsync(unit, cancellationToken);
         }
 
-        await _writeRepository.UpdateAsync(route, cancellationToken);
         await _dbContext.SaveChangesAsync(cancellationToken);
 
         return units.Select(x => x.Id);
@@ -104,7 +103,7 @@ public class RouteService : IRouteService
         units = units as RouteUnit[] ?? units.ToArray();
         if (!units.Any()) return;
 
-        var routeId = units.First().Id;
+        var routeId = units.First().RouteId;
 
         var route = await _writeRepository.Read.GetByIdAsync(routeId, cancellationToken);
         if (route.UserId != userId)
@@ -123,7 +122,8 @@ public class RouteService : IRouteService
             }
             else
             {
-                route.RouteUnits!.Add(unit);
+                unit.Id = Guid.NewGuid();
+                await _writeRouteUnitRepository.AddAsync(unit, cancellationToken);
             }
         }
 

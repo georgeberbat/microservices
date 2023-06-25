@@ -12,7 +12,7 @@ public class TariffUnitConfiguration : IEntityTypeConfiguration<TariffUnit>
         builder.HasKey(tu => tu.Id);
 
         builder.Property(tu => tu.Id).HasColumnName("id");
-        builder.Property(tu => tu.ParentId).HasColumnName("tariff_id").IsRequired();
+        builder.Property(tu => tu.TariffId).HasColumnName("tariff_id").IsRequired();
         builder.Property(tu => tu.LocationId).HasColumnName("location_id").IsRequired();
         builder.Property(tu => tu.NextLocationId).HasColumnName("next_location_id").IsRequired();
         builder.Property(tu => tu.WeightScaleCoefficient).HasColumnName("weight_scale_coefficient").IsRequired();
@@ -20,7 +20,7 @@ public class TariffUnitConfiguration : IEntityTypeConfiguration<TariffUnit>
 
         builder.HasOne(tu => tu.Tariff)
             .WithMany(t => t.TariffUnits)
-            .HasForeignKey(tu => tu.ParentId)
+            .HasForeignKey(tu => tu.TariffId)
             .OnDelete(DeleteBehavior.Cascade)
             .HasConstraintName("FK_TariffUnit_Tariff");
     }

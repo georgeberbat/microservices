@@ -4,7 +4,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Text.Unicode;
 
-namespace Shared.Extensions
+namespace Shared.Exceptions
 {
     public static class IndentedJsonExtension
     {

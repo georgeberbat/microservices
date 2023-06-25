@@ -42,85 +42,85 @@ namespace Tariff.Dal.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Route",
+                name: "route",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    UserId = table.Column<Guid>(type: "uuid", nullable: false),
-                    Name = table.Column<string>(type: "text", nullable: false),
-                    Description = table.Column<string>(type: "text", nullable: true),
-                    CreatedUtc = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
+                    user_id = table.Column<Guid>(type: "uuid", nullable: false),
+                    name = table.Column<string>(type: "text", nullable: false),
+                    description = table.Column<string>(type: "text", nullable: true),
+                    created_utc = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Route", x => x.Id);
+                    table.PrimaryKey("PK_route", x => x.id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Tariff",
+                name: "tariff",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    UserId = table.Column<Guid>(type: "uuid", nullable: false),
-                    Name = table.Column<string>(type: "text", nullable: false),
-                    CreatedUtc = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    UpdatedUtc = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    DeletedUtc = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
+                    user_id = table.Column<Guid>(type: "uuid", nullable: false),
+                    name = table.Column<string>(type: "text", nullable: false),
+                    created_utc = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    updated_utc = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    deleted_utc = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Tariff", x => x.Id);
+                    table.PrimaryKey("PK_tariff", x => x.id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "RouteUnit",
+                name: "route_unit",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    ParentId = table.Column<Guid>(type: "uuid", nullable: false),
-                    TariffId = table.Column<Guid>(type: "uuid", nullable: false),
-                    CreatedUtc = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    UpdatedUtc = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    RouteId = table.Column<Guid>(type: "uuid", nullable: true)
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
+                    route_id = table.Column<Guid>(type: "uuid", nullable: false),
+                    tariff_id = table.Column<Guid>(type: "uuid", nullable: false),
+                    created_utc = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    updated_utc = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_RouteUnit", x => x.Id);
+                    table.PrimaryKey("PK_route_unit", x => x.id);
                     table.ForeignKey(
-                        name: "FK_RouteUnit_Route_RouteId",
-                        column: x => x.RouteId,
-                        principalTable: "Route",
-                        principalColumn: "Id");
+                        name: "FK_RouteUnit_Route",
+                        column: x => x.route_id,
+                        principalTable: "route",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_RouteUnit_Tariff_TariffId",
-                        column: x => x.TariffId,
-                        principalTable: "Tariff",
-                        principalColumn: "Id",
+                        name: "FK_RouteUnit_Tariff",
+                        column: x => x.tariff_id,
+                        principalTable: "tariff",
+                        principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "TariffUnit",
+                name: "tariff_unit",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    ParentId = table.Column<Guid>(type: "uuid", nullable: false),
-                    LocationId = table.Column<Guid>(type: "uuid", nullable: false),
-                    NextLocationId = table.Column<Guid>(type: "uuid", nullable: false),
-                    WeightScaleCoefficient = table.Column<double>(type: "double precision", nullable: false),
-                    Distance = table.Column<int>(type: "integer", nullable: false),
-                    TariffId = table.Column<Guid>(type: "uuid", nullable: true),
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
+                    tariff_id = table.Column<Guid>(type: "uuid", nullable: false),
+                    location_id = table.Column<Guid>(type: "uuid", nullable: false),
+                    next_location_id = table.Column<Guid>(type: "uuid", nullable: false),
+                    weight_scale_coefficient = table.Column<double>(type: "double precision", nullable: false),
+                    distance = table.Column<int>(type: "integer", nullable: false),
                     CreatedUtc = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     UpdatedUtc = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TariffUnit", x => x.Id);
+                    table.PrimaryKey("PK_tariff_unit", x => x.id);
                     table.ForeignKey(
-                        name: "FK_TariffUnit_Tariff_TariffId",
-                        column: x => x.TariffId,
-                        principalTable: "Tariff",
-                        principalColumn: "Id");
+                        name: "FK_TariffUnit_Tariff",
+                        column: x => x.tariff_id,
+                        principalTable: "tariff",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -149,19 +149,19 @@ namespace Tariff.Dal.Migrations
                 filter: "\"Status\" in (0,1)");
 
             migrationBuilder.CreateIndex(
-                name: "IX_RouteUnit_RouteId",
-                table: "RouteUnit",
-                column: "RouteId");
+                name: "IX_route_unit_route_id",
+                table: "route_unit",
+                column: "route_id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_RouteUnit_TariffId",
-                table: "RouteUnit",
-                column: "TariffId");
+                name: "IX_route_unit_tariff_id",
+                table: "route_unit",
+                column: "tariff_id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TariffUnit_TariffId",
-                table: "TariffUnit",
-                column: "TariffId");
+                name: "IX_tariff_unit_tariff_id",
+                table: "tariff_unit",
+                column: "tariff_id");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -171,16 +171,16 @@ namespace Tariff.Dal.Migrations
                 schema: "cap");
 
             migrationBuilder.DropTable(
-                name: "RouteUnit");
+                name: "route_unit");
 
             migrationBuilder.DropTable(
-                name: "TariffUnit");
+                name: "tariff_unit");
 
             migrationBuilder.DropTable(
-                name: "Route");
+                name: "route");
 
             migrationBuilder.DropTable(
-                name: "Tariff");
+                name: "tariff");
         }
     }
 }

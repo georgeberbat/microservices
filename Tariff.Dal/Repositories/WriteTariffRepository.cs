@@ -15,7 +15,5 @@ namespace Tariff.Dal.Repositories
         {
             _systemClock = systemClock ?? throw new ArgumentNullException(nameof(systemClock));
         }
-        
-        
     }
 }

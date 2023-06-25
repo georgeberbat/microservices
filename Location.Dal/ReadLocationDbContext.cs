@@ -1,7 +1,9 @@
 using System.Runtime.CompilerServices;
 using GorodPay.Shared.Dal.Extensions;
+using Location.Dal.EntityConfigurations;
 using Microsoft.EntityFrameworkCore;
 using Shared.Dal;
+using Shared.Exceptions;
 
 namespace Location.Dal
 {
@@ -23,10 +25,24 @@ namespace Location.Dal
             : base(options, modelStore)
         {
         }
+        
+        public Task CheckExistence(IEnumerable<Guid> ids, CancellationToken cancellationToken)
+        {
+            var exists = Locations.Where(x => ids.Contains(x.Id)).Select(x => x.Id);
+
+            if (ids.Count() < exists.Count())
+            {
+                throw new BadRequestException(); 
+            }
+
+            return Task.FromResult(true);
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             if (modelBuilder == null) throw new ArgumentNullException(nameof(modelBuilder));
+
+            modelBuilder.ApplyConfiguration(new LocationConfiguration());
 
             base.OnModelCreating(modelBuilder);
             modelBuilder.SetDefaultDateTimeKind(DateTimeKind.Utc);

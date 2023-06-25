@@ -8,6 +8,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Location.Dal.Domain\Location.Dal.Domain.csproj" />
+      <ProjectReference Include="..\Location.Dal\Location.Dal.csproj" />
       <ProjectReference Include="..\Shared.Dal\Shared.Dal.csproj" />
       <ProjectReference Include="..\Tariff.Dal.Domain\Tariff.Dal.Domain.csproj" />
       <ProjectReference Include="..\Tariff.Models\Tariff.Models.csproj" />

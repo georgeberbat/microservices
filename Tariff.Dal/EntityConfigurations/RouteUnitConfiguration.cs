@@ -13,16 +13,10 @@ public class RouteUnitConfiguration : IEntityTypeConfiguration<RouteUnit>
         builder.HasKey(ru => ru.Id);
 
         builder.Property(ru => ru.Id).HasColumnName("id");
-        builder.Property(ru => ru.ParentId).HasColumnName("parent_id").IsRequired();
+        builder.Property(ru => ru.RouteId).HasColumnName("route_id").IsRequired();
         builder.Property(ru => ru.TariffId).HasColumnName("tariff_id").IsRequired();
         builder.Property(ru => ru.CreatedUtc).HasColumnName("created_utc").IsRequired();
         builder.Property(ru => ru.UpdatedUtc).HasColumnName("updated_utc").IsRequired();
-
-        builder.HasOne(ru => ru.Route)
-            .WithMany()
-            .HasForeignKey(ru => ru.ParentId)
-            .OnDelete(DeleteBehavior.Cascade)
-            .HasConstraintName("FK_RouteUnit_Route");
 
         builder.HasOne(ru => ru.Tariff)
             .WithMany()

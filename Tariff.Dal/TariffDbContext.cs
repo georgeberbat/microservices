@@ -4,6 +4,7 @@ using GorodPay.Shared.Dal.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
 using Shared.Dal;
+using Tariff.Dal.EntityConfigurations;
 using Tariff.Models;
 
 namespace Tariff.Dal
@@ -32,6 +33,12 @@ namespace Tariff.Dal
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             if (modelBuilder == null) throw new ArgumentNullException(nameof(modelBuilder));
+            
+            modelBuilder.ApplyConfiguration(new RouteConfiguration());
+            modelBuilder.ApplyConfiguration(new RouteUnitConfiguration());
+            modelBuilder.ApplyConfiguration(new TariffConfiguration());
+            modelBuilder.ApplyConfiguration(new TariffUnitConfiguration());
+
 
             modelBuilder.HasPostgresEnum<PermissionMode>();
             base.OnModelCreating(modelBuilder);

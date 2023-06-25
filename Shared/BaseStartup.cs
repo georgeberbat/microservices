@@ -28,6 +28,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Serilog;
+using Shared.ExceptionHandling;
 using Shared.Extensions;
 using Shared.Logger;
 using Shared.Options;
@@ -287,7 +288,7 @@ namespace Shared
             app.UseRequestLogger();
 
             // process exceptions
-            // app.UseMiddleware<GlobalExceptionMiddleware>();
+            app.UseMiddleware<GlobalExceptionMiddleware>();
 
             //localization
             var localizationOptions =

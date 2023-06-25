@@ -30,7 +30,7 @@ public class RouteGrpcService : RouteServiceGrpc.RouteServiceGrpcBase
     public override async Task<CreateRouteResponseGrpc> CreateRoute(CreateRouteRequestGrpc request,
         ServerCallContext context)
     {
-        var id = await _routeService.Create(Guid.Parse(request.UserId), _mapper.Map<Route>(request.Route),
+        var id = await _routeService.Create(Guid.Parse(request.UserId), _mapper.Map<Route>(request),
             context.CancellationToken);
         return new CreateRouteResponseGrpc
         {
@@ -40,7 +40,7 @@ public class RouteGrpcService : RouteServiceGrpc.RouteServiceGrpcBase
 
     public override async Task<Empty> UpdateRoute(UpdateRouteRequestGrpc request, ServerCallContext context)
     {
-        await _routeService.Update(Guid.Parse(request.UserId), _mapper.Map<Route>(request.Route),
+        await _routeService.Update(Guid.Parse(request.UserId), _mapper.Map<Route>(request),
             context.CancellationToken);
 
         return new Empty();

@@ -7,7 +7,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Shared\Shared.csproj" />
+      <PackageReference Include="Grpc.Core.Api" Version="2.38.1" />
     </ItemGroup>
 
 </Project>

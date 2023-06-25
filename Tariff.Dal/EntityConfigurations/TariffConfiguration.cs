@@ -19,7 +19,7 @@ public class TariffConfiguration : IEntityTypeConfiguration<Models.Tariff>
 
         builder.HasMany(t => t.TariffUnits)
             .WithOne(tu => tu.Tariff)
-            .HasForeignKey(tu => tu.ParentId)
+            .HasForeignKey(tu => tu.TariffId)
             .OnDelete(DeleteBehavior.Cascade)
             .HasConstraintName("FK_TariffUnit_Tariff");
     }

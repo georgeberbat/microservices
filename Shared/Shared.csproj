@@ -33,4 +33,8 @@
       <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="6.4.0" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\Shared.Exceptions\Shared.Exceptions.csproj" />
+    </ItemGroup>
+
 </Project>

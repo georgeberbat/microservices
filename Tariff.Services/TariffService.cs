@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Dex.Specifications;
-using Location.Dal.Domain;
+using Location.Dal;
 using Shared.Dal;
 using Shared.Dal.Specifications;
 using Shared.Exceptions;
@@ -13,18 +13,18 @@ public class TariffService : ITariffService
 {
     private readonly IWriteTariffRepository _writeRepository;
     private readonly IWriteTariffUnitRepository _writeTariffUnitRepository;
-    private readonly IReadLocationRepository _locationRepository;
+    private readonly ReadLocationDbContext _readLocationDbContext;
     private readonly IUnityOfWork _dbContext;
     private readonly IMapper _mapper;
 
 
     public TariffService(IWriteTariffRepository writeRepository, IUnityOfWork dbContext, IMapper mapper,
-        IReadLocationRepository locationRepository, IWriteTariffUnitRepository writeTariffUnitRepository)
+        ReadLocationDbContext readLocationDbContext, IWriteTariffUnitRepository writeTariffUnitRepository)
     {
         _writeRepository = writeRepository;
         _dbContext = dbContext;
         _mapper = mapper;
-        _locationRepository = locationRepository;
+        _readLocationDbContext = readLocationDbContext;
         _writeTariffUnitRepository = writeTariffUnitRepository;
     }
 
@@ -72,10 +72,10 @@ public class TariffService : ITariffService
         units = units as TariffUnit[] ?? units.ToArray();
         if (!units.Any()) return ArraySegment<Guid>.Empty;
 
-        var tariffId = units.First().Id;
-        if (units.Any(x => x.ParentId != tariffId))
+        var tariffId = units.First().TariffId;
+        if (units.Any(x => x.TariffId != tariffId))
         {
-            throw new BadRequestException(units.Where(x => x.ParentId != tariffId)
+            throw new BadRequestException(units.Where(x => x.TariffId != tariffId)
                 .Select(x => (nameof(units), (object)x)).ToArray());
         }
 
@@ -85,15 +85,14 @@ public class TariffService : ITariffService
             throw new NotAllowedException();
         }
 
-        await _locationRepository.CheckExistence(units.Select(x => x.LocationId), cancellationToken);
+        await _readLocationDbContext.CheckExistence(units.Select(x => x.LocationId), cancellationToken);
 
         foreach (var unit in units)
         {
             unit.Id = Guid.NewGuid();
-            tariff.TariffUnits!.Add(unit);
+            await _writeTariffUnitRepository.AddAsync(unit, cancellationToken);
         }
 
-        await _writeRepository.UpdateAsync(tariff, cancellationToken);
         await _dbContext.SaveChangesAsync(cancellationToken);
 
         return units.Select(x => x.Id);
@@ -104,7 +103,7 @@ public class TariffService : ITariffService
         units = units as TariffUnit[] ?? units.ToArray();
         if (!units.Any()) return;
 
-        var tariffId = units.First().Id;
+        var tariffId = units.First().TariffId;
 
         var tariff = await _writeRepository.Read.GetByIdAsync(tariffId, cancellationToken);
         if (tariff.UserId != userId)
@@ -112,7 +111,7 @@ public class TariffService : ITariffService
             throw new NotAllowedException();
         }
 
-        await _locationRepository.CheckExistence(units.Select(x => x.LocationId), cancellationToken);
+        await _readLocationDbContext.CheckExistence(units.Select(x => x.LocationId), cancellationToken);
 
         foreach (var unit in units)
         {
@@ -123,7 +122,8 @@ public class TariffService : ITariffService
             }
             else
             {
-                tariff.TariffUnits!.Add(unit);
+                unit.Id = Guid.NewGuid();
+                await _writeTariffUnitRepository.AddAsync(unit, cancellationToken);
             }
         }
 

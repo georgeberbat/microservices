@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using MassTransit;
 using Microsoft.Extensions.Logging;
+using Shared.Exceptions;
 using Shared.Extensions;
 
 namespace Shared.MassTransit

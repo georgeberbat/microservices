@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Shared;
 using Shared.Extensions;
+using Tariff.Async;
 using Tariff.Services;
 
 namespace Tariff.Api
@@ -31,6 +32,7 @@ namespace Tariff.Api
             services.RegisterLocationReadonlyDal(locationConnectionString);
 
             services.RegisterInternalServices();
+            services.RegisterAsyncServices(Configuration);
 
             // grpc
             services.AddGrpc(options =>

@@ -1,5 +1,7 @@
 ﻿using Location.Dal.Domain;
+using Location.Models.Commands;
 using Location.Services.Specifications;
+using MassTransit;
 using Shared.Dal;
 using Shared.Dal.Specifications;
 
@@ -9,11 +11,14 @@ internal class LocationService : ILocationService
 {
     private readonly IWriteLocationRepository _locationRepository;
     private readonly IUnityOfWork _dbContext;
+    private readonly ISendEndpointProvider _sendEndpointProvider;
 
-    public LocationService(IWriteLocationRepository locationRepository, IUnityOfWork dbContext)
+    public LocationService(IWriteLocationRepository locationRepository, IUnityOfWork dbContext,
+        ISendEndpointProvider sendEndpointProvider)
     {
         _locationRepository = locationRepository ?? throw new ArgumentNullException(nameof(locationRepository));
         _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
+        _sendEndpointProvider = sendEndpointProvider ?? throw new ArgumentNullException(nameof(sendEndpointProvider));
     }
 
     public async Task<IEnumerable<Models.Location>> Get(CancellationToken cancellationToken)
@@ -60,5 +65,8 @@ internal class LocationService : ILocationService
         var location = await _locationRepository.Read.GetByIdAsync(id, cancellationToken);
         await _locationRepository.RemoveAsync(location, cancellationToken);
         await _dbContext.SaveChangesAsync(cancellationToken);
+
+        await _sendEndpointProvider.Send(new OnLocationRemovedCommand { LocationId = location.Id },
+            cancellationToken);
     }
 }

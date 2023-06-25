@@ -1,6 +1,9 @@
+using Dex.MassTransit.Rabbit;
 using gRPC.UserStore.Exception;
 using Location.Dal;
+using Location.Models.Commands;
 using Location.Services;
+using MassTransit;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -22,6 +25,8 @@ namespace Location.Api
         public override void ConfigureServices(IServiceCollection services)
         {
             base.ConfigureServices(services);
+            
+            services.Configure<RabbitMqOptions>(Configuration.GetSection(nameof(RabbitMqOptions)).Bind);
 
             var connectionString = Configuration.GetConnectionString("DefaultConnection");
             services.RegisterDal(connectionString);
@@ -32,6 +37,14 @@ namespace Location.Api
             services.AddGrpc(options =>
             {
                 options.Interceptors.Add<ExceptionInterceptor>();
+            });
+            
+            services.AddMassTransit(x =>
+            {
+                x.RegisterBus((context, _) =>
+                {
+                    context.RegisterSendEndPoint<OnLocationRemovedCommand>();
+                });
             });
 
             // settings

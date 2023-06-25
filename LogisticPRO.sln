@@ -95,6 +95,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tariff.Services", "Tariff.S
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tariff.gRPC", "Tariff.gRPC\Tariff.gRPC.csproj", "{E0E259A6-C5E4-455C-BFC4-BDEC1DED5042}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tariff.Async", "Tariff.Async\Tariff.Async.csproj", "{DAFFCC64-F0BE-4818-A9C7-C0F0BBDE3645}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -209,6 +211,10 @@ Global
 		{E0E259A6-C5E4-455C-BFC4-BDEC1DED5042}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E0E259A6-C5E4-455C-BFC4-BDEC1DED5042}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E0E259A6-C5E4-455C-BFC4-BDEC1DED5042}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DAFFCC64-F0BE-4818-A9C7-C0F0BBDE3645}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DAFFCC64-F0BE-4818-A9C7-C0F0BBDE3645}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DAFFCC64-F0BE-4818-A9C7-C0F0BBDE3645}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DAFFCC64-F0BE-4818-A9C7-C0F0BBDE3645}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -254,6 +260,7 @@ Global
 		{E66B727B-A0B7-4686-9CB7-DF61D8CF40FB} = {D1AF3A0C-A5B9-46AC-8665-26D72A32B074}
 		{0B1DA52D-0309-4816-88CA-0DC0499FB93E} = {A4E0DD15-6807-4302-9AAE-DA6BEDA5471D}
 		{E0E259A6-C5E4-455C-BFC4-BDEC1DED5042} = {52D9CC47-9561-4338-B4EA-5DD7A06B978A}
+		{DAFFCC64-F0BE-4818-A9C7-C0F0BBDE3645} = {52D9CC47-9561-4338-B4EA-5DD7A06B978A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {94ACF0B9-E8A3-4E9B-AE79-95B2E6BD7CE7}

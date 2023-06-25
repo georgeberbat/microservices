@@ -1,79 +1,80 @@
 ﻿syntax = "proto3";
-
-package routingservice;
-
-import "google/protobuf/timestamp.proto";
 import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
 
-message Route {
+message TariffGrpc {
   string id = 1;
   string user_id = 2;
   string name = 3;
-  string description = 4;
-  google.protobuf.Timestamp created_utc = 5;
-  repeated RouteUnit route_units = 6;
-}
-
-message RouteUnit {
-  string id = 1;
-  string parent_id = 2;
-  string tariff_id = 3;
   google.protobuf.Timestamp created_utc = 4;
   google.protobuf.Timestamp updated_utc = 5;
+  google.protobuf.Timestamp deleted_utc = 6;
+  repeated TariffUnitGrpc tariff_units = 7;
 }
 
-message GetRoutesRequest {
+message TariffUnitGrpc {
+  string id = 1;
+  string parent_id = 2;
+  string location_id = 3;
+  string next_location_id = 4;
+  double weight_scale_coefficient = 5;
+  int32 distance = 6;
+  google.protobuf.Timestamp created_utc = 7;
+  google.protobuf.Timestamp updated_utc = 8;
+}
+
+message GetTariffsRequestGrpc {
   string user_id = 1;
 }
 
-message GetRoutesResponse {
-  repeated Route routes = 1;
+message GetTariffsResponseGrpc {
+  repeated TariffGrpc tariffs = 1;
 }
 
-message CreateRouteRequest {
+message CreateTariffRequestGrpc {
   string user_id = 1;
-  Route route = 2;
+  TariffGrpc tariff = 2;
 }
 
-message CreateRouteResponse {
-  string route_id = 1;
+message CreateTariffResponseGrpc {
+  string tariff_id = 1;
 }
 
-message UpdateRouteRequest {
+message UpdateTariffRequestGrpc {
   string user_id = 1;
-  Route route = 2;
+  TariffGrpc tariff = 2;
 }
 
-message DeleteRouteRequest {
+message DeleteTariffRequestGrpc {
   string user_id = 1;
-  string route_id = 2;
+  string tariff_id = 2;
 }
 
-message CreateRouteUnitsRequest {
+message CreateTariffUnitsRequestGrpc {
   string user_id = 1;
-  repeated RouteUnit route_units = 2;
+  repeated TariffUnitGrpc tariff_units = 2;
 }
 
-message CreateRouteUnitsResponse {
+message CreateTariffUnitsResponseGrpc {
   repeated string unit_ids = 1;
 }
 
-message UpdateRouteUnitsRequest {
+message UpdateTariffUnitsRequestGrpc {
   string user_id = 1;
-  repeated RouteUnit route_units = 2;
+  repeated TariffUnitGrpc tariff_units = 2;
 }
 
-message DeleteRouteUnitsRequest {
+message DeleteTariffUnitsRequestGrpc {
   string user_id = 1;
   repeated string unit_ids = 2;
 }
 
-service RouteService {
-  rpc GetRoutes(GetRoutesRequest) returns (GetRoutesResponse);
-  rpc CreateRoute(CreateRouteRequest) returns (CreateRouteResponse);
-  rpc UpdateRoute(UpdateRouteRequest) returns (google.protobuf.Empty);
-  rpc DeleteRoute(DeleteRouteRequest) returns (google.protobuf.Empty);
-  rpc CreateRouteUnits(CreateRouteUnitsRequest) returns (CreateRouteUnitsResponse);
-  rpc UpdateRouteUnits(UpdateRouteUnitsRequest) returns (google.protobuf.Empty);
-  rpc DeleteRouteUnits(DeleteRouteUnitsRequest) returns (google.protobuf.Empty);
+service TariffServiceGrpc {
+  rpc GetTariffs(GetTariffsRequestGrpc) returns (GetTariffsResponseGrpc);
+  rpc CreateTariff(CreateTariffRequestGrpc) returns (CreateTariffResponseGrpc);
+  rpc UpdateTariff(UpdateTariffRequestGrpc) returns (google.protobuf.Empty);
+  rpc DeleteTariff(DeleteTariffRequestGrpc) returns (google.protobuf.Empty);
+  rpc CreateTariffUnits(CreateTariffUnitsRequestGrpc) returns (CreateTariffUnitsResponseGrpc);
+  rpc UpdateTariffUnits(UpdateTariffUnitsRequestGrpc) returns (google.protobuf.Empty);
+  rpc DeleteTariffUnits(DeleteTariffUnitsRequestGrpc) returns (google.protobuf.Empty);
 }

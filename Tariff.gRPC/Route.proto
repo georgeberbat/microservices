@@ -1,0 +1,76 @@
+﻿syntax = "proto3";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/empty.proto";
+
+message RouteGrpc {
+  string id = 1;
+  string user_id = 2;
+  string name = 3;
+  string description = 4;
+  google.protobuf.Timestamp created_utc = 5;
+  repeated RouteUnitGrpc route_units = 6;
+}
+
+message RouteUnitGrpc {
+  string id = 1;
+  string parent_id = 2;
+  string tariff_id = 3;
+  google.protobuf.Timestamp created_utc = 4;
+  google.protobuf.Timestamp updated_utc = 5;
+}
+
+message GetRoutesRequestGrpc {
+  string user_id = 1;
+}
+
+message GetRoutesResponseGrpc {
+  repeated RouteGrpc routes = 1;
+}
+
+message CreateRouteRequestGrpc {
+  string user_id = 1;
+  RouteGrpc route = 2;
+}
+
+message CreateRouteResponseGrpc {
+  string route_id = 1;
+}
+
+message UpdateRouteRequestGrpc {
+  string user_id = 1;
+  RouteGrpc route = 2;
+}
+
+message DeleteRouteRequestGrpc {
+  string user_id = 1;
+  string route_id = 2;
+}
+
+message CreateRouteUnitsRequestGrpc {
+  string user_id = 1;
+  repeated RouteUnitGrpc route_units = 2;
+}
+
+message CreateRouteUnitsResponseGrpc {
+  repeated string unit_ids = 1;
+}
+
+message UpdateRouteUnitsRequestGrpc {
+  string user_id = 1;
+  repeated RouteUnitGrpc route_units = 2;
+}
+
+message DeleteRouteUnitsRequestGrpc {
+  string user_id = 1;
+  repeated string unit_ids = 2;
+}
+
+service RouteServiceGrpc {
+  rpc GetRoutes(GetRoutesRequestGrpc) returns (GetRoutesResponseGrpc);
+  rpc CreateRoute(CreateRouteRequestGrpc) returns (CreateRouteResponseGrpc);
+  rpc UpdateRoute(UpdateRouteRequestGrpc) returns (google.protobuf.Empty);
+  rpc DeleteRoute(DeleteRouteRequestGrpc) returns (google.protobuf.Empty);
+  rpc CreateRouteUnits(CreateRouteUnitsRequestGrpc) returns (CreateRouteUnitsResponseGrpc);
+  rpc UpdateRouteUnits(UpdateRouteUnitsRequestGrpc) returns (google.protobuf.Empty);
+  rpc DeleteRouteUnits(DeleteRouteUnitsRequestGrpc) returns (google.protobuf.Empty);
+}

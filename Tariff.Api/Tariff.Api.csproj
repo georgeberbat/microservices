@@ -12,6 +12,8 @@
         <ProjectReference Include="..\Location.Services\Location.Services.csproj" />
         <ProjectReference Include="..\Shared\Shared.csproj" />
         <ProjectReference Include="..\Tariff.Dal\Tariff.Dal.csproj" />
+        <ProjectReference Include="..\Tariff.gRPC\Tariff.gRPC.csproj" />
+        <ProjectReference Include="..\Tariff.Services\Tariff.Services.csproj" />
     </ItemGroup>
 
     <ItemGroup>

@@ -9,6 +9,7 @@
 
     <ItemGroup>
         <ProjectReference Include="..\gRPC.UserStore\gRPC.UserStore.csproj" />
+        <ProjectReference Include="..\Location.Dal\Location.Dal.csproj" />
         <ProjectReference Include="..\Location.Services\Location.Services.csproj" />
         <ProjectReference Include="..\Shared\Shared.csproj" />
         <ProjectReference Include="..\Tariff.Dal\Tariff.Dal.csproj" />

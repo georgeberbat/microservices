@@ -41,7 +41,6 @@ namespace ApiComposition.Api
                 o.Creator = invoker => new ProfileGrpc.ProfileGrpcClient(invoker) { Name = "composition.client.profilegrpc" };
             });
             
-            
             services.AddGrpcClient<LocationGrpc.LocationGrpcClient>("composition.client.locationgrpc", (p, o) =>
             {
                 var options = p.GetRequiredService<IOptions<GrpcClientsOptions>>();
@@ -49,8 +48,24 @@ namespace ApiComposition.Api
                 o.Creator = invoker => new LocationGrpc.LocationGrpcClient(invoker) { Name = "composition.client.locationgrpc" };
             });
             
+            services.AddGrpcClient<RouteServiceGrpc.RouteServiceGrpcClient>("composition.client.routegrpc", (p, o) =>
+            {
+                var options = p.GetRequiredService<IOptions<GrpcClientsOptions>>();
+                o.Address = new Uri(options.Value.TariffServiceUrl);
+                o.Creator = invoker => new LocationGrpc.LocationGrpcClient(invoker) { Name = "composition.client.routegrpc" };
+            });
+            
+            services.AddGrpcClient<TariffServiceGrpc.TariffServiceGrpcClient>("composition.client.tariffgrpc", (p, o) =>
+            {
+                var options = p.GetRequiredService<IOptions<GrpcClientsOptions>>();
+                o.Address = new Uri(options.Value.TariffServiceUrl);
+                o.Creator = invoker => new LocationGrpc.LocationGrpcClient(invoker) { Name = "composition.client.tariffgrpc" };
+            });
+            
             services.AddScoped<ProfileClient>();
             services.AddScoped<LocationClient>();
+            services.AddScoped<RouteClient>();
+            services.AddScoped<TariffClient>();
             services.AddScoped<IUserIdHttpContextService, UserIdHttpContextService>();
         }
 

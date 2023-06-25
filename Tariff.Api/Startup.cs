@@ -1,6 +1,6 @@
 ﻿using gRPC.UserStore.Exception;
-using Location.Services;
 using Tariff.Dal;
+using Location.Dal.Public;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Shared;
 using Shared.Extensions;
+using Tariff.Services;
 
 namespace Tariff.Api
 {
@@ -25,6 +26,9 @@ namespace Tariff.Api
 
             var connectionString = Configuration.GetConnectionString("DefaultConnection");
             services.RegisterDal(connectionString);
+            
+            var locationConnectionString = Configuration.GetConnectionString("LocationConnection");
+            services.RegisterLocationReadonlyDal(locationConnectionString);
 
             services.RegisterInternalServices();
 
@@ -52,7 +56,8 @@ namespace Tariff.Api
             base.ConfigureEndpoints(endpoints);
 
             var grpEndpoint = $"*:{Configuration["Grpc:Port"]}";
-            // endpoints.MapGrpcService<TariffGrpcService>().RequireHost(grpEndpoint);
+            endpoints.MapGrpcService<TariffGrpcService>().RequireHost(grpEndpoint);
+            endpoints.MapGrpcService<RouteGrpcService>().RequireHost(grpEndpoint);
         }
     }
 }

@@ -5,7 +5,6 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Tariff.Dal;
-using Tariff.Models;
 
 #nullable disable
 
@@ -125,7 +124,10 @@ namespace Tariff.Dal.Migrations
                     b.Property<DateTime>("CreatedUtc")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<Guid>("RouteId")
+                    b.Property<Guid>("ParentId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("RouteId")
                         .HasColumnType("uuid");
 
                     b.Property<Guid>("TariffId")
@@ -176,6 +178,9 @@ namespace Tariff.Dal.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
+                    b.Property<DateTime>("CreatedUtc")
+                        .HasColumnType("timestamp with time zone");
+
                     b.Property<int>("Distance")
                         .HasColumnType("integer");
 
@@ -185,8 +190,14 @@ namespace Tariff.Dal.Migrations
                     b.Property<Guid>("NextLocationId")
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("TariffId")
+                    b.Property<Guid>("ParentId")
                         .HasColumnType("uuid");
+
+                    b.Property<Guid?>("TariffId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("UpdatedUtc")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<double>("WeightScaleCoefficient")
                         .HasColumnType("double precision");
@@ -198,57 +209,11 @@ namespace Tariff.Dal.Migrations
                     b.ToTable("TariffUnit");
                 });
 
-            modelBuilder.Entity("Tariff.Models.UserRoutePermissions", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<PermissionMode>("Mode")
-                        .HasColumnType("permission_mode");
-
-                    b.Property<Guid>("RouteId")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uuid");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RouteId");
-
-                    b.ToTable("UserRoutePermissions");
-                });
-
-            modelBuilder.Entity("Tariff.Models.UserTariffPermissions", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<PermissionMode>("Mode")
-                        .HasColumnType("permission_mode");
-
-                    b.Property<Guid>("TariffId")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uuid");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("TariffId");
-
-                    b.ToTable("UserTariffPermissions");
-                });
-
             modelBuilder.Entity("Tariff.Models.RouteUnit", b =>
                 {
                     b.HasOne("Tariff.Models.Route", "Route")
                         .WithMany("RouteUnits")
-                        .HasForeignKey("RouteId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("RouteId");
 
                     b.HasOne("Tariff.Models.Tariff", "Tariff")
                         .WithMany()
@@ -265,46 +230,18 @@ namespace Tariff.Dal.Migrations
                 {
                     b.HasOne("Tariff.Models.Tariff", "Tariff")
                         .WithMany("TariffUnits")
-                        .HasForeignKey("TariffId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Tariff");
-                });
-
-            modelBuilder.Entity("Tariff.Models.UserRoutePermissions", b =>
-                {
-                    b.HasOne("Tariff.Models.Route", "Route")
-                        .WithMany("RoutePermissions")
-                        .HasForeignKey("RouteId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Route");
-                });
-
-            modelBuilder.Entity("Tariff.Models.UserTariffPermissions", b =>
-                {
-                    b.HasOne("Tariff.Models.Tariff", "Tariff")
-                        .WithMany("TariffPermissions")
-                        .HasForeignKey("TariffId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("TariffId");
 
                     b.Navigation("Tariff");
                 });
 
             modelBuilder.Entity("Tariff.Models.Route", b =>
                 {
-                    b.Navigation("RoutePermissions");
-
                     b.Navigation("RouteUnits");
                 });
 
             modelBuilder.Entity("Tariff.Models.Tariff", b =>
                 {
-                    b.Navigation("TariffPermissions");
-
                     b.Navigation("TariffUnits");
                 });
 #pragma warning restore 612, 618

@@ -18,6 +18,7 @@
       <ProjectReference Include="..\Location.gRPC\Location.gRPC.csproj" />
       <ProjectReference Include="..\Profile.gRPC\Profile.gRPC.csproj" />
       <ProjectReference Include="..\Shared\Shared.csproj" />
+      <ProjectReference Include="..\Tariff.gRPC\Tariff.gRPC.csproj" />
     </ItemGroup>
 
     <ItemGroup>

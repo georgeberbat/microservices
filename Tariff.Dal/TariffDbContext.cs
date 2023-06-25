@@ -12,7 +12,9 @@ namespace Tariff.Dal
     public class TariffDbContext : BaseDbContext<TariffDbContext>
     {
         public DbSet<Models.Tariff> Tariff => Set<Models.Tariff>();
+        public DbSet<TariffUnit> TariffUnit => Set<TariffUnit>();
         public DbSet<Route> Route => Set<Route>();
+        public DbSet<RouteUnit> RouteUnit => Set<RouteUnit>();
 
 #pragma warning disable CA2255
         [ModuleInitializer]

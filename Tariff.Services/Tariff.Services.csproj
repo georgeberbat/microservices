@@ -20,6 +20,12 @@
       <Compile Update="ITariffService.cs">
         <DependentUpon>IBaseService.cs</DependentUpon>
       </Compile>
+      <Compile Update="RouteService.cs">
+        <DependentUpon>IRouteService.cs</DependentUpon>
+      </Compile>
+      <Compile Update="TariffService.cs">
+        <DependentUpon>ITariffService.cs</DependentUpon>
+      </Compile>
     </ItemGroup>
 
 </Project>

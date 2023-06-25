@@ -4,5 +4,6 @@
     {
         public string ProfileServiceUrl { get; set; } = null!;
         public string LocationServiceUrl { get; set; } = null!;
+        public string TariffServiceUrl { get; set; } = null!;
     }
 }

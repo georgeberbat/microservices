@@ -1,6 +1,5 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
-using Tariff.Models;
 
 #nullable disable
 
@@ -74,34 +73,15 @@ namespace Tariff.Dal.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "UserRoutePermissions",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    RouteId = table.Column<Guid>(type: "uuid", nullable: false),
-                    UserId = table.Column<Guid>(type: "uuid", nullable: false),
-                    Mode = table.Column<PermissionMode>(type: "permission_mode", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_UserRoutePermissions", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_UserRoutePermissions_Route_RouteId",
-                        column: x => x.RouteId,
-                        principalTable: "Route",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "RouteUnit",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    RouteId = table.Column<Guid>(type: "uuid", nullable: false),
+                    ParentId = table.Column<Guid>(type: "uuid", nullable: false),
                     TariffId = table.Column<Guid>(type: "uuid", nullable: false),
                     CreatedUtc = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    UpdatedUtc = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                    UpdatedUtc = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    RouteId = table.Column<Guid>(type: "uuid", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -110,8 +90,7 @@ namespace Tariff.Dal.Migrations
                         name: "FK_RouteUnit_Route_RouteId",
                         column: x => x.RouteId,
                         principalTable: "Route",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_RouteUnit_Tariff_TariffId",
                         column: x => x.TariffId,
@@ -125,11 +104,14 @@ namespace Tariff.Dal.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    TariffId = table.Column<Guid>(type: "uuid", nullable: false),
+                    ParentId = table.Column<Guid>(type: "uuid", nullable: false),
                     LocationId = table.Column<Guid>(type: "uuid", nullable: false),
                     NextLocationId = table.Column<Guid>(type: "uuid", nullable: false),
                     WeightScaleCoefficient = table.Column<double>(type: "double precision", nullable: false),
-                    Distance = table.Column<int>(type: "integer", nullable: false)
+                    Distance = table.Column<int>(type: "integer", nullable: false),
+                    TariffId = table.Column<Guid>(type: "uuid", nullable: true),
+                    CreatedUtc = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    UpdatedUtc = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -138,28 +120,7 @@ namespace Tariff.Dal.Migrations
                         name: "FK_TariffUnit_Tariff_TariffId",
                         column: x => x.TariffId,
                         principalTable: "Tariff",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "UserTariffPermissions",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    TariffId = table.Column<Guid>(type: "uuid", nullable: false),
-                    UserId = table.Column<Guid>(type: "uuid", nullable: false),
-                    Mode = table.Column<PermissionMode>(type: "permission_mode", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_UserTariffPermissions", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_UserTariffPermissions_Tariff_TariffId",
-                        column: x => x.TariffId,
-                        principalTable: "Tariff",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(
@@ -201,16 +162,6 @@ namespace Tariff.Dal.Migrations
                 name: "IX_TariffUnit_TariffId",
                 table: "TariffUnit",
                 column: "TariffId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_UserRoutePermissions_RouteId",
-                table: "UserRoutePermissions",
-                column: "RouteId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_UserTariffPermissions_TariffId",
-                table: "UserTariffPermissions",
-                column: "TariffId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -224,12 +175,6 @@ namespace Tariff.Dal.Migrations
 
             migrationBuilder.DropTable(
                 name: "TariffUnit");
-
-            migrationBuilder.DropTable(
-                name: "UserRoutePermissions");
-
-            migrationBuilder.DropTable(
-                name: "UserTariffPermissions");
 
             migrationBuilder.DropTable(
                 name: "Route");

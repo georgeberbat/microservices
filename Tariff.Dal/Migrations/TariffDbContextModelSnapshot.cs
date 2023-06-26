@@ -85,8 +85,7 @@ namespace Tariff.Dal.Migrations
 
                     b.HasIndex("Retries");
 
-                    b.HasIndex("Status")
-                        .HasFilter("\"Status\" in (0,1)");
+                    b.HasIndex("Status");
 
                     b.ToTable("outbox", "cap");
                 });
@@ -193,7 +192,8 @@ namespace Tariff.Dal.Migrations
                         .HasColumnName("id");
 
                     b.Property<DateTime>("CreatedUtc")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("created_utc");
 
                     b.Property<int>("Distance")
                         .HasColumnType("integer")
@@ -212,7 +212,8 @@ namespace Tariff.Dal.Migrations
                         .HasColumnName("tariff_id");
 
                     b.Property<DateTime>("UpdatedUtc")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("updated_utc");
 
                     b.Property<double>("WeightScaleCoefficient")
                         .HasColumnType("double precision")

@@ -17,6 +17,8 @@ public class TariffUnitConfiguration : IEntityTypeConfiguration<TariffUnit>
         builder.Property(tu => tu.NextLocationId).HasColumnName("next_location_id").IsRequired();
         builder.Property(tu => tu.WeightScaleCoefficient).HasColumnName("weight_scale_coefficient").IsRequired();
         builder.Property(tu => tu.Distance).HasColumnName("distance").IsRequired();
+        builder.Property(l => l.CreatedUtc).HasColumnName("created_utc");
+        builder.Property(l => l.UpdatedUtc).HasColumnName("updated_utc");
 
         builder.HasOne(tu => tu.Tariff)
             .WithMany(t => t.TariffUnits)

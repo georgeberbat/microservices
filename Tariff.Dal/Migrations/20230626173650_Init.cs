@@ -109,8 +109,8 @@ namespace Tariff.Dal.Migrations
                     next_location_id = table.Column<Guid>(type: "uuid", nullable: false),
                     weight_scale_coefficient = table.Column<double>(type: "double precision", nullable: false),
                     distance = table.Column<int>(type: "integer", nullable: false),
-                    CreatedUtc = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    UpdatedUtc = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                    created_utc = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    updated_utc = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -145,8 +145,7 @@ namespace Tariff.Dal.Migrations
                 name: "IX_outbox_Status",
                 schema: "cap",
                 table: "outbox",
-                column: "Status",
-                filter: "\"Status\" in (0,1)");
+                column: "Status");
 
             migrationBuilder.CreateIndex(
                 name: "IX_route_unit_route_id",

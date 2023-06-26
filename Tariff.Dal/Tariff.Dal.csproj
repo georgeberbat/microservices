@@ -8,8 +8,8 @@
 
     <ItemGroup>
         <PackageReference Include="Dex.Cap.Outbox.AspNetScheduler" Version="1.4.30" />
-        <PackageReference Include="Dex.Cap.Outbox.Ef" Version="1.7.36" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.10" />
+        <PackageReference Include="Dex.Cap.Outbox.Ef" Version="2.5.10" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.12" />
     </ItemGroup>
 
     <ItemGroup>

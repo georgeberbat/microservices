@@ -31,6 +31,9 @@ public static class MicrosoftDependencyInjectionExtensions
         services.AddScoped<IWriteUserRepository, WriteUserRepository>();
         services.AddScoped<IReadUserRepository, ReadUserRepository>();
         
+        services.AddScoped<IWriteNotificationRepository, WriteNotificationRepository>();
+        services.AddScoped<IReadNotificationRepository, ReadNotificationRepository>();
+        
         // outbox
         services.AddOutbox<ProfileDbContext>();
         services.RegisterOutboxScheduler(5);

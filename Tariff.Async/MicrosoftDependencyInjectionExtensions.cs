@@ -1,9 +1,11 @@
-﻿using Dex.Extensions;
+﻿using Dex.Cap.Outbox.Interfaces;
+using Dex.Extensions;
 using Dex.MassTransit.Rabbit;
 using Location.Models.Commands;
 using MassTransit;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using ProfileDomain.Commands;
 
 namespace Tariff.Async;
 
@@ -25,7 +27,11 @@ public static class MicrosoftDependencyInjectionExtensions
             x.RegisterBus((context, configurator) =>
             {
                 context.RegisterReceiveEndpoint<OnLocationRemovedConsumer, OnLocationRemovedCommand>(configurator);
+                
+                context.RegisterSendEndPoint<RouteChangedCommand>();
             });
         });
+        
+        services.AddScoped<IOutboxMessageHandler<RouteChangedCommand>, RouteChangedOutboxHandler>();
     }
 }

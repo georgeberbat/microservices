@@ -12,7 +12,7 @@ using Tariff.Dal;
 namespace Tariff.Dal.Migrations
 {
     [DbContext(typeof(TariffDbContext))]
-    [Migration("20230625164123_Init")]
+    [Migration("20230626170747_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

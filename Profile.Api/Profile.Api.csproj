@@ -9,6 +9,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\Profile.Async\Profile.Async.csproj" />
       <ProjectReference Include="..\Profile.Dal\Profile.Dal.csproj" />
       <ProjectReference Include="..\Profile.gRPC\Profile.gRPC.csproj" />
       <ProjectReference Include="..\Profile.Services\Profile.Services.csproj" />

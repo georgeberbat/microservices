@@ -2,6 +2,7 @@ using System;
 using System.Runtime.CompilerServices;
 using GorodPay.Shared.Dal.Extensions;
 using Microsoft.EntityFrameworkCore;
+using Profile.Dal.EntityConfigurations;
 using ProfileDomain;
 using Shared.Dal;
 
@@ -29,6 +30,9 @@ namespace Profile.Dal
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             if (modelBuilder == null) throw new ArgumentNullException(nameof(modelBuilder));
+            
+            modelBuilder.ApplyConfiguration(new UserConfiguration());
+            modelBuilder.ApplyConfiguration(new NotificationConfiguration());
 
             base.OnModelCreating(modelBuilder);
             modelBuilder.SetDefaultDateTimeKind(DateTimeKind.Utc);

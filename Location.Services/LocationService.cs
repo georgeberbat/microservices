@@ -66,7 +66,7 @@ internal class LocationService : ILocationService
         await _locationRepository.RemoveAsync(location, cancellationToken);
         await _dbContext.SaveChangesAsync(cancellationToken);
 
-        await _sendEndpointProvider.Send(new OnLocationRemovedCommand { LocationId = location.Id },
+        await _sendEndpointProvider.Send(new OnLocationRemovedCommand { LocationId = location.Id, Name = location.Name },
             cancellationToken);
     }
 }

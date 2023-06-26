@@ -1,4 +1,7 @@
 using System;
+using Dex.Extensions;
+using Dex.MassTransit.Rabbit;
+using MassTransit;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -7,8 +10,10 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Profile.Async;
 using Profile.Dal;
 using Profile.Services;
+using ProfileDomain.Commands;
 using Shared.Extensions;
 using Shared.Options;
 using Shared.Password;
@@ -26,9 +31,6 @@ namespace Profile
         {
             base.ConfigureServices(services);
 
-
-            // todo: register internal services
-            // settings
             services.AddOptionsWithDataAnnotationsValidation<TokenOptions>(
                 Configuration.GetSection(nameof(TokenOptions)));
             services.AddMvc();
@@ -41,6 +43,22 @@ namespace Profile
 
             var connectionString = Configuration.GetConnectionString("DefaultConnection");
             services.RegisterDal(connectionString);
+            
+            // masstransit
+            services.AddMassTransit(x =>
+            {
+                x.AddConsumer<RouteChangedConsumer>(configurator =>
+                    {
+                        configurator.UseConcurrencyLimit(1);
+                        configurator.UseMessageRetry(retryConfigurator => retryConfigurator.Interval(100, 10.Seconds()));
+                    }
+                );
+
+                x.RegisterBus((context, configurator) =>
+                {
+                    context.RegisterReceiveEndpoint<RouteChangedConsumer, RouteChangedCommand>(configurator);
+                });
+            });
         }
 
         public override void Configure(IApplicationBuilder app, IWebHostEnvironment env)

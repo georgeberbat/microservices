@@ -7,10 +7,12 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Location.Models\Location.Models.csproj" />
+      <ProjectReference Include="..\Profile.Dal.Domain\Profile.Dal.Domain.csproj" />
       <ProjectReference Include="..\Profile.Models\Profile.Models.csproj" />
-      <ProjectReference Include="..\Shared\Shared.csproj" />
-      <ProjectReference Include="..\Tariff.Services\Tariff.Services.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="MassTransit.Abstractions" Version="8.0.9" />
     </ItemGroup>
 
 </Project>

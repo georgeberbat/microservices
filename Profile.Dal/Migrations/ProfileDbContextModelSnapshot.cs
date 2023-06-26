@@ -90,6 +90,45 @@ namespace Profile.Dal.Migrations
                     b.ToTable("outbox", "cap");
                 });
 
+            modelBuilder.Entity("ProfileDomain.Notification", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedUtc")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("created_utc");
+
+                    b.Property<string>("Text")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("text");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("title");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("user_id");
+
+                    b.Property<bool>("Viewed")
+                        .HasColumnType("boolean")
+                        .HasColumnName("viewed");
+
+                    b.HasKey("Id")
+                        .HasName("id");
+
+                    b.HasIndex("CreatedUtc")
+                        .HasDatabaseName("IX_Notification_CreatedUtc_Desc");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("notification", (string)null);
+                });
+
             modelBuilder.Entity("ProfileDomain.User", b =>
                 {
                     b.Property<Guid>("Id")
@@ -97,40 +136,74 @@ namespace Profile.Dal.Migrations
                         .HasColumnType("uuid");
 
                     b.Property<DateTime>("CreatedUtc")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("created_utc");
 
                     b.Property<DateTime?>("DeletedUtc")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("deleted_utc");
 
                     b.Property<string>("Email")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("email");
 
                     b.Property<DateTime?>("EmailConfirmed")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("email_confirmed");
 
                     b.Property<string>("FirstName")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("first_name");
 
                     b.Property<string>("LastName")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("last_name");
 
                     b.Property<string>("MiddleName")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("middle_name");
 
                     b.Property<string>("Password")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("password");
 
                     b.Property<string>("Phone")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("phone");
 
                     b.Property<DateTime>("UpdatedUtc")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("updated_utc");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.HasIndex("CreatedUtc");
+
+                    b.HasIndex("DeletedUtc");
+
+                    b.HasIndex("Email")
+                        .IsUnique();
+
+                    b.HasIndex("Phone")
+                        .IsUnique();
+
+                    b.HasIndex("UpdatedUtc");
+
+                    b.ToTable("user", (string)null);
+                });
+
+            modelBuilder.Entity("ProfileDomain.Notification", b =>
+                {
+                    b.HasOne("ProfileDomain.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("FK_Notification_User");
+
+                    b.Navigation("User");
                 });
 #pragma warning restore 612, 618
         }

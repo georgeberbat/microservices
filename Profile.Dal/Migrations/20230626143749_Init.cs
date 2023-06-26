@@ -41,25 +41,57 @@ namespace Profile.Dal.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Users",
+                name: "user",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    CreatedUtc = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    DeletedUtc = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    UpdatedUtc = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    Phone = table.Column<string>(type: "text", nullable: false),
-                    Email = table.Column<string>(type: "text", nullable: true),
-                    EmailConfirmed = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    Password = table.Column<string>(type: "text", nullable: false),
-                    FirstName = table.Column<string>(type: "text", nullable: true),
-                    MiddleName = table.Column<string>(type: "text", nullable: true),
-                    LastName = table.Column<string>(type: "text", nullable: true)
+                    created_utc = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    deleted_utc = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    updated_utc = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    phone = table.Column<string>(type: "text", nullable: false),
+                    email = table.Column<string>(type: "text", nullable: true),
+                    email_confirmed = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    password = table.Column<string>(type: "text", nullable: false),
+                    first_name = table.Column<string>(type: "text", nullable: true),
+                    middle_name = table.Column<string>(type: "text", nullable: true),
+                    last_name = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Users", x => x.Id);
+                    table.PrimaryKey("PK_user", x => x.Id);
                 });
+
+            migrationBuilder.CreateTable(
+                name: "notification",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    user_id = table.Column<Guid>(type: "uuid", nullable: false),
+                    created_utc = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    text = table.Column<string>(type: "text", nullable: false),
+                    title = table.Column<string>(type: "text", nullable: false),
+                    viewed = table.Column<bool>(type: "boolean", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("id", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Notification_User",
+                        column: x => x.user_id,
+                        principalTable: "user",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Notification_CreatedUtc_Desc",
+                table: "notification",
+                column: "created_utc");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_notification_user_id",
+                table: "notification",
+                column: "user_id");
 
             migrationBuilder.CreateIndex(
                 name: "IX_outbox_CorrelationId",
@@ -85,16 +117,46 @@ namespace Profile.Dal.Migrations
                 table: "outbox",
                 column: "Status",
                 filter: "\"Status\" in (0,1)");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_user_created_utc",
+                table: "user",
+                column: "created_utc");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_user_deleted_utc",
+                table: "user",
+                column: "deleted_utc");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_user_email",
+                table: "user",
+                column: "email",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_user_phone",
+                table: "user",
+                column: "phone",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_user_updated_utc",
+                table: "user",
+                column: "updated_utc");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "notification");
+
+            migrationBuilder.DropTable(
                 name: "outbox",
                 schema: "cap");
 
             migrationBuilder.DropTable(
-                name: "Users");
+                name: "user");
         }
     }
 }

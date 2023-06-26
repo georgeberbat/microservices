@@ -31,4 +31,16 @@ public class ProfileClient
             Id = _userId.UserId.ToString()
         }, cancellationToken: cancellationToken);
     }
+
+    public async Task<GetNotificationsResponse> GetNotifications(GetNotificationsRequest request,
+        CancellationToken cancellationToken)
+    {
+        return await _client.GetNotificationsAsync(request, cancellationToken: cancellationToken);
+    }
+    
+    public async Task MarkAsRead(MarkAsReadRequest request,
+        CancellationToken cancellationToken)
+    {
+        await _client.MarkAsReadAsync(request, cancellationToken: cancellationToken);
+    }
 }

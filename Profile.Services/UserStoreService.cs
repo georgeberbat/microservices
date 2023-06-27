@@ -34,8 +34,8 @@ public class UserStoreService : UserStore.UserStoreBase
             var user = await _readUserRepository
                 .GetBySpecAsync(new ActiveUserByPhoneSpecification(request.Username), CancellationToken.None)
                 .ConfigureAwait(false);
-            
-            if (user.Password == _passwordGenerator.MakeHash(user.Id.ToString("N"), request.Password))
+            var expected = _passwordGenerator.MakeHash(user.Id.ToString("N"), request.Password);
+            if (user.Password == expected)
             {
                 return new AuthResult { Success = true, Sub = user.Id.ToString() };
             }

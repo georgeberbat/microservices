@@ -9,6 +9,7 @@ using Profile.Dal.Specifications;
 using ProfileDomain;
 using Shared.Dal;
 using Shared.Dal.Exceptions;
+using Shared.Password;
 
 namespace Profile.Services
 {
@@ -18,14 +19,16 @@ namespace Profile.Services
         private readonly IMapper _mapper;
         private readonly IUnityOfWork _dbContext;
         private readonly IOutboxService<IUnityOfWork> _outboxService;
+        private readonly IPasswordGenerator _passwordGenerator;
 
         public UserService(IWriteUserRepository writeUserRepository, IMapper mapper, IUnityOfWork dbContext,
-            IOutboxService<IUnityOfWork> outboxService)
+            IOutboxService<IUnityOfWork> outboxService, IPasswordGenerator passwordGenerator)
         {
             _writeUserRepository = writeUserRepository;
             _mapper = mapper;
             _dbContext = dbContext;
             _outboxService = outboxService;
+            _passwordGenerator = passwordGenerator;
         }
 
         public async Task<ProfileDomain.User> GetUser(Guid id, CancellationToken cancellationToken)
@@ -56,8 +59,9 @@ namespace Profile.Services
 
                     await ctx.State.Repository.AddAsync(new ProfileDomain.User
                     {
+                        Id = userId,
                         Phone = request.Phone,
-                        Password = request.Password
+                        Password = _passwordGenerator.MakeHash(userId.ToString("N"), request.Password)
                     }, token);
 
                     await ctx.State.DbContext.SaveChangesAsync(token);

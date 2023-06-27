@@ -48,7 +48,10 @@ public class OnLocationRemovedConsumer : BaseConsumer<OnLocationRemovedCommand>
                     //TU by TariffId
                     var affectedUnits =
                         (await _tariffUnitRepository.FilterAsync(
-                            new Specification<TariffUnit>(x => x.LocationId == context.Message.LocationId),
+                            new Specification<TariffUnit>(x =>
+                                x.LocationId == context.Message.LocationId ||
+                                x.NextLocationId == context.Message.LocationId
+                                ),
                             token)).ToLookup(x => x.TariffId);
 
                     // Tariff by tariffID

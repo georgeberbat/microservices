@@ -1,5 +1,6 @@
 using ApiComposition.Api.GrpcClients;
 using ApiComposition.Api.ServiceModel;
+using ApiComposition.Api.ServiceModel.Profile;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shared.Controllers;
@@ -25,7 +26,7 @@ public class RegisterController : BaseAnonymousController
         var result = await _profileClient.RegisterUser(request, cancellationToken);
         return Ok(result.UserId);
     }
-    
+
     [HttpDelete]
     [Authorize]
     public async Task<IActionResult> DeleteMyself(CancellationToken cancellationToken)
@@ -33,7 +34,7 @@ public class RegisterController : BaseAnonymousController
         await _profileClient.DeleteMyself(cancellationToken);
         return Ok();
     }
-    
+
     [HttpGet]
     [Authorize]
     public async Task<IActionResult> GetNotifications(bool viewed, CancellationToken cancellationToken)
@@ -49,7 +50,7 @@ public class RegisterController : BaseAnonymousController
 
         return Ok(response);
     }
-    
+
     [HttpPost]
     [Authorize]
     public async Task<IActionResult> MarkAsRead(ArrayRequest<Guid> request, CancellationToken cancellationToken)

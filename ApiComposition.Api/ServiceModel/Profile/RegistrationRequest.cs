@@ -1,6 +1,6 @@
 ﻿using ApiComposition.Models;
 
-namespace ApiComposition.Api.ServiceModel;
+namespace ApiComposition.Api.ServiceModel.Profile;
 
 public class RegistrationRequest : IRegistrationRequest
 {

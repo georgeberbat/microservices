@@ -89,25 +89,6 @@ namespace Identity
                 expression.AddProfile(new MainProfile());
             });
 
-            //masstransit
-            // var concurrencyLimit = Environment.IsDevelopment() ? 1 : System.Environment.ProcessorCount;
-
-            // var internalMqOptions = new RabbitMqOptions();
-            // Configuration.GetSection(nameof(RabbitMqOptions)).Bind(internalMqOptions);
-            // services.AddMassTransit(x =>
-            // {
-            //     x.AddConsumer<InvalidateUserTokenConsumer>(configurator =>
-            //     {
-            //         configurator.UseConcurrencyLimit(concurrencyLimit);
-            //         configurator.UseMessageRetry(retryConfigurator => retryConfigurator.Interval(100, 10.Seconds()));
-            //     });
-            //
-            //     x.RegisterBus((context, configurator) =>
-            //     {
-            //         context.RegisterReceiveEndpoint<InvalidateUserTokenConsumer, UserTokenCommand>(configurator, rabbitMqOptions: internalMqOptions);
-            //     }, internalMqOptions);
-            // });
-
             // services
             services.AddSingleton<ISystemClock, SystemClock>();
             services.AddScoped<IInvalidateUserTokenService, InvalidateUserTokenService>();

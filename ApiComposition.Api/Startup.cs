@@ -81,13 +81,6 @@ namespace ApiComposition.Api
             if (options == null) throw new ArgumentNullException(nameof(options));
 
             base.ConfigureAuthorization(authorizationSettings, options);
-
-            // options.AddPolicy("device-regular_user",
-            //     policy =>
-            //     {
-            //         policy.RequireAuthenticatedUser();
-            //         policy.RequireScope("composition-api");
-            //     });
         }
     }
 }

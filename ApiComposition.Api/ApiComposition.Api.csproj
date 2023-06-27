@@ -17,6 +17,7 @@
       <ProjectReference Include="..\ApiComposition.Models\ApiComposition.Models.csproj" />
       <ProjectReference Include="..\Location.gRPC\Location.gRPC.csproj" />
       <ProjectReference Include="..\Profile.gRPC\Profile.gRPC.csproj" />
+      <ProjectReference Include="..\Shared.Password\Shared.Password.csproj" />
       <ProjectReference Include="..\Shared\Shared.csproj" />
       <ProjectReference Include="..\Tariff.gRPC\Tariff.gRPC.csproj" />
     </ItemGroup>

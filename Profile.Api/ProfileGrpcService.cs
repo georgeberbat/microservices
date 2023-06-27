@@ -43,7 +43,7 @@ public class ProfileGrpcService : ProfileGrpc.ProfileGrpcBase
     {
         var userId = Guid.Parse(request.UserId);
         var notifications = await _notificationRepository.Read.FilterAsync(
-            new Specification<ProfileDomain.Notification>(x => x.UserId == userId && x.Viewed == false),
+            new Specification<ProfileDomain.Notification>(x => x.UserId == userId && x.Viewed == request.Viewed),
             context.CancellationToken);
 
         var response = new GetNotificationsResponse
